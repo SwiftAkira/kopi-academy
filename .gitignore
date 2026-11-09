@@ -1,0 +1,30 @@
+# private course material, notes, credit log, video work dirs
+private/
+.env
+.env.*
+**/token.txt
+
+# raw seed videos (only 720p web copies in content/ get committed)
+seed/**/*.mp4
+
+# build output and deps
+node_modules/
+dist/
+.astro/
+_output/
+.jupyterlite.doit.db
+
+# python / jupyter
+__pycache__/
+.ipynb_checkpoints/
+*.wav
+
+# local tooling and test output
+.venv/
+*.zip
+test-results/
+playwright-report/
+.cache/
+
+# local preview config (holds machine-specific paths)
+.claude/launch.json

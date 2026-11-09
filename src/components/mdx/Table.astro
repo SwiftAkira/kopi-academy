@@ -1,0 +1,8 @@
+---
+// Wide tables scroll sideways inside their own box. The box is focusable, so a
+// keyboard user can scroll it too (WCAG 2.1.1).
+---
+
+<div class="tablewrap" tabindex="0" role="region" aria-label="Table">
+  <table {...Astro.props}><slot /></table>
+</div>

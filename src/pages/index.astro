@@ -1,0 +1,60 @@
+---
+import { Brain, FilmSlate, ListChecks, Notebook, Exam } from '@phosphor-icons/react/dist/ssr';
+import Base from '../layouts/Base.astro';
+import HomeDash from '../islands/HomeDash.tsx';
+import { publicLessons, tracks } from '../lib/curriculum';
+import { BASE, url } from '../lib/paths';
+import schedule from '../../content/schedule/2026-p2.json';
+
+const steps = [
+  { Icon: Brain, title: 'Warm-up', text: 'Three questions from earlier lessons. The ones you missed come back first.' },
+  { Icon: FilmSlate, title: 'Video', text: 'Three to five minutes on one idea, with notes and a transcript underneath.' },
+  { Icon: ListChecks, title: 'Quiz', text: 'A few quick questions, each with an explanation.' },
+  { Icon: Notebook, title: 'Notebook', text: 'Four to six exercises with folded hints and tests that say PASS or FAIL.' },
+  { Icon: Exam, title: 'Exam corner', text: 'One question in the style of the real exam, then the answer.' },
+];
+---
+
+<Base section="home">
+  <section class="hero wrap">
+    <div class="hero__text">
+      <p class="kicker">Exam prep for Python and Intelligent Systems</p>
+      <h1>One small lesson per course, every weekday.</h1>
+      <p class="lede">
+        Warm up, watch, answer, practise, then try one exam-style question. About 25 minutes, and you are done for the day.
+      </p>
+    </div>
+    <div class="hero__art" aria-hidden="true">
+      <img class="dither theme-light" src={url('/art/hero.light.png')} alt="" width="132" height="108" />
+      <img class="dither theme-dark" src={url('/art/hero.dark.png')} alt="" width="132" height="108" />
+    </div>
+  </section>
+
+  <div class="band" aria-hidden="true"></div>
+
+  <div class="wrap home">
+    <HomeDash client:load lessons={publicLessons} tracks={tracks} schedule={schedule} base={BASE} />
+  </div>
+
+  <section class="how wrap" aria-labelledby="how-h">
+    <h2 id="how-h">How a lesson goes</h2>
+    <ol class="how__list">
+      {
+        steps.map((s, i) => (
+          <li>
+            <span class="how__n" aria-hidden="true">
+              {i + 1}
+            </span>
+            <s.Icon weight="bold" aria-hidden="true" />
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="hint">
+      Your progress stays in this browser. There are no accounts. You can move it to another device from
+      <a href={url('/settings/')}>Settings</a>.
+    </p>
+  </section>
+</Base>

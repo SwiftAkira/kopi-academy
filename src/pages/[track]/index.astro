@@ -1,0 +1,70 @@
+---
+import Base from '../../layouts/Base.astro';
+import CupMark from '../../components/CupMark.astro';
+import { groupsOf, lessonsOf, tracks, type Track } from '../../lib/curriculum';
+import { hasContent } from '../../lib/lesson-data';
+import { lessonPath } from '../../lib/paths';
+import schedule from '../../../content/schedule/2026-p2.json';
+
+export function getStaticPaths() {
+  return tracks.map((t) => ({ params: { track: t.id }, props: { track: t } }));
+}
+
+interface Props {
+  track: Track;
+}
+const { track } = Astro.props;
+const groups = groupsOf(track.id);
+const total = lessonsOf(track.id).length;
+const exam = schedule.exams.find((e) => e.id === track.examId);
+---
+
+<Base title={`${track.title} path`} section={track.id} description={`${track.course}: ${track.blurb}`}>
+  <div class="wrap wrap--narrow pathpage" data-path data-track={track.id} data-schedule={JSON.stringify(schedule)} data-exam={exam?.id}>
+    <header class="pathpage__head">
+      <p class="kicker">{track.code} · {track.course}</p>
+      <h1>{track.title}</h1>
+      <p class="lede">{track.blurb}</p>
+      <p class="pathpage__meta">
+        <span class="chip chip--quiet"><span data-path-done>0</span> of {total} lessons done</span>
+        <span class="chip chip--quiet" data-path-exam hidden></span>
+      </p>
+    </header>
+
+    <ol class="path">
+      {
+        groups.map((g) => (
+          <li class="path__group">
+            <h2>{g.title}</h2>
+            <ol class="path__list">
+              {g.lessons.map((l) => (
+                <li class="node" data-lesson={l.id} data-state="upcoming">
+                  <a class="node__link" href={lessonPath(l.track, l.id)}>
+                    <span class="node__cup">
+                      <CupMark level={0} size={60} />
+                    </span>
+                    <span class="node__body">
+                      <span class="node__title">{l.title}</span>
+                      <span class="node__sum">{l.summary}</span>
+                      <span class="node__meta">
+                        <span class="chip node__chip" hidden />
+                        {!hasContent(l.id) && <span class="chip chip--quiet">Being written</span>}
+                        <span>{l.minutes} min</span>
+                        <span class="node__date" />
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="hint pathpage__foot">Nothing here is locked. Take the lessons in any order you like.</p>
+  </div>
+
+  <script>
+    import '../../scripts/path.ts';
+  </script>
+</Base>

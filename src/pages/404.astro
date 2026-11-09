@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/paths';
+---
+
+<Base title="Page not found" description="This page does not exist.">
+  <div class="wrap wrap--narrow page">
+    <div class="empty">
+      <img class="dither theme-light" src={url('/art/cup-empty.light.png')} alt="" width="96" height="80" />
+      <img class="dither theme-dark" src={url('/art/cup-empty.dark.png')} alt="" width="96" height="80" />
+      <h1>This cup is empty</h1>
+      <p>There is no page at this address. It may have moved, or the link may be wrong.</p>
+      <p>
+        <a class="btn btn--primary" href={url('/')}>Go to today's lessons</a>
+      </p>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,92 @@
+name: Build, test and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  # A project site lives under /<repo>/ on GitHub Pages.
+  SITE_BASE: /${{ github.event.repository.name }}
+  SITE_URL: https://${{ github.repository_owner }}.github.io
+  PUBLIC_REPO: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          pip install -r requirements.txt
+
+      - name: Content rules (no emojis, nothing time-bound, Phosphor icons only)
+        run: node scripts/check-content.mjs
+
+      - name: Verify notebooks (stubs FAIL cleanly, solutions PASS)
+        run: python scripts/verify_notebooks.py
+
+      - name: Video size budget
+        run: node scripts/check-video-budget.mjs
+
+      - name: Build the site
+        run: npm run build
+
+      - name: Build JupyterLite under /lab/
+        run: sh scripts/build-lab.sh
+
+      - name: Check the built pages
+        run: node scripts/check-content.mjs --dist
+
+      - name: Install the test browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Accessibility (axe, WCAG 2.2 A and AA) and walkthrough tests
+        run: npx playwright test
+
+      - name: Keep the walkthrough screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: walkthrough-screenshots
+          path: test-results/walkthrough
+          if-no-files-found: ignore
+
+      - name: Upload the site
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

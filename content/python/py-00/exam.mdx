@@ -1,0 +1,50 @@
+---
+style: From scratch
+---
+
+**From scratch.** A library charges a fee for books that come back late.
+
+Write a function `late_fee(days_late: int, is_member: bool) -> float`.
+
+Rules:
+
+- A book that is 0 days late, or early, costs nothing: return `0.0`.
+- Otherwise the fee is 0.25 for every day late.
+- Members pay half of the fee.
+- The fee is never more than `10.0`. The limit is applied last, after the member discount.
+
+Expected results:
+
+| Call | Result |
+|---|---|
+| `late_fee(0, False)` | `0.0` |
+| `late_fee(4, False)` | `1.0` |
+| `late_fee(4, True)` | `0.5` |
+| `late_fee(100, False)` | `10.0` |
+
+Give the function type hints and a docstring. It must **return** the fee, not print it.
+
+<Answer>
+
+```python
+def late_fee(days_late: int, is_member: bool) -> float:
+    """Return the fee for a book that is days_late days late."""
+    if days_late <= 0:
+        return 0.0
+    fee = days_late * 0.25
+    if is_member:
+        fee = fee / 2
+    if fee > 10.0:
+        fee = 10.0
+    return fee
+```
+
+What a marker looks for:
+
+- **Every path returns.** The early `return 0.0` covers books that are not late, and the last line covers everything else. No path falls off the end and gives `None`.
+- **`return`, not `print`.** The rules say "return", and the table shows values, not printed text.
+- **`if is_member:`**, not `if is_member == True:`. The parameter is already a bool.
+- **The order of the rules.** The limit comes after the discount, as the last rule says. With 100 days a member pays 10.0 as well, because half of 25.0 is still above the limit.
+- Type hints on both parameters and on the result, and a one-line docstring.
+
+</Answer>

@@ -1,0 +1,19 @@
+{
+  "name": "kopi-code",
+  "type": "dark",
+  "colors": {
+    "editor.background": "#231812",
+    "editor.foreground": "#F1E7D6"
+  },
+  "tokenColors": [
+    { "settings": { "foreground": "#F1E7D6" } },
+    { "scope": ["comment", "punctuation.definition.comment"], "settings": { "foreground": "#B3A693", "fontStyle": "italic" } },
+    { "scope": ["keyword", "storage", "storage.type", "keyword.control", "keyword.operator.logical", "constant.language"], "settings": { "foreground": "#F0A07F" } },
+    { "scope": ["string", "string.quoted", "punctuation.definition.string"], "settings": { "foreground": "#B4D6A8" } },
+    { "scope": ["constant.numeric"], "settings": { "foreground": "#A9C6E8" } },
+    { "scope": ["entity.name.function", "support.function", "meta.function-call.generic"], "settings": { "foreground": "#F2CF7E" } },
+    { "scope": ["support.type", "entity.name.type", "entity.name.class"], "settings": { "foreground": "#E3BFA8" } },
+    { "scope": ["variable.parameter"], "settings": { "foreground": "#F1E7D6" } },
+    { "scope": ["keyword.operator", "punctuation"], "settings": { "foreground": "#D9CBB5" } }
+  ]
+}

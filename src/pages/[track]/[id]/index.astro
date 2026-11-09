@@ -1,0 +1,130 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Answer from '../../../components/mdx/Answer.astro';
+import Table from '../../../components/mdx/Table.astro';
+import LessonFlow from '../../../islands/LessonFlow.tsx';
+import { lessonsOf, publicLessons, trackById, type PublicLesson } from '../../../lib/curriculum';
+import { bankOf, notebookLinks, notebookOf, quizOf, videoOf } from '../../../lib/lesson-data';
+import { STORAGE_KEY } from '../../../lib/site';
+import { lessonPath, url } from '../../../lib/paths';
+
+export function getStaticPaths() {
+  return publicLessons.map((l) => ({ params: { track: l.track, id: l.id }, props: { lesson: l } }));
+}
+
+interface Props {
+  lesson: PublicLesson;
+}
+const { lesson } = Astro.props;
+const track = trackById(lesson.track);
+const siblings = lessonsOf(lesson.track);
+const index = siblings.findIndex((l) => l.id === lesson.id);
+const nextLesson = siblings[index + 1];
+const pathHref = url(`/${lesson.track}/`);
+
+const entry = await getEntry('lessons', lesson.id);
+const quizFile = quizOf(lesson.id);
+const ready = Boolean(entry && quizFile);
+
+const examEntry = ready ? await getEntry('exams', lesson.id) : undefined;
+const transcriptEntry = ready ? await getEntry('transcripts', lesson.id) : undefined;
+const Notes = entry ? (await render(entry)).Content : null;
+const ExamContent = examEntry ? (await render(examEntry)).Content : null;
+const Transcript = transcriptEntry ? (await render(transcriptEntry)).Content : null;
+
+const nb = notebookOf(lesson.id);
+const earlier = siblings.slice(0, index).map((l) => l.id);
+const bank = bankOf(lesson.track).filter((q) => q.lesson !== lesson.id);
+---
+
+<Base title={`${lesson.title}, ${track.title}`} section={lesson.track} immersive={ready} description={`${track.title}, week ${lesson.courseWeek}: ${lesson.summary}.`}>
+  {
+    ready && (
+      <Fragment slot="head">
+        <script is:inline define:vars={{ KEY: STORAGE_KEY, ID: lesson.id, STEPS: lesson.steps }}>
+          // Show the step the user was on before anything paints.
+          try {
+            var saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+            var at = saved && saved.lessons && saved.lessons[ID] ? saved.lessons[ID].step : 0;
+            if (at > 0 && at < STEPS.length) document.documentElement.dataset.step = STEPS[at];
+          } catch (e) {}
+        </script>
+        <noscript>
+          <style>
+            .step {
+              display: block !important;
+              margin-bottom: 3rem;
+            }
+            .flow__bar,
+            .stepbar {
+              display: none;
+            }
+          </style>
+        </noscript>
+      </Fragment>
+    )
+  }
+
+  {
+    ready ? (
+      <LessonFlow
+        client:load
+        lesson={lesson}
+        trackTitle={track.title}
+        pathHref={pathHref}
+        quiz={quizFile!.questions}
+        bank={bank}
+        earlier={earlier}
+        cold={quizFile!.coldWarmup ?? []}
+        video={videoOf(lesson.id)}
+        notebook={nb ? notebookLinks(lesson, nb) : null}
+        takeaways={entry!.data.takeaways}
+        trap={entry!.data.trap}
+        next={nextLesson ? { title: nextLesson.title, href: lessonPath(nextLesson.track, nextLesson.id), kicker: 'Next lesson' } : null}
+      >
+        {Notes && (
+          <Fragment slot="notes">
+            <Notes components={{ table: Table }} />
+          </Fragment>
+        )}
+        {Transcript && (
+          <Fragment slot="transcript">
+            <Transcript components={{ table: Table }} />
+          </Fragment>
+        )}
+        {ExamContent && (
+          <Fragment slot="exam">
+            <ExamContent components={{ Answer, table: Table }} />
+          </Fragment>
+        )}
+      </LessonFlow>
+    ) : (
+      <div class="wrap wrap--narrow soon">
+        <p class="kicker">
+          {track.title}, week {lesson.courseWeek}
+        </p>
+        <h1>{lesson.title}</h1>
+        <p class="lede">{lesson.summary}.</p>
+        <div class="empty">
+          <img class="dither theme-light" src={url('/art/cup-empty.light.png')} alt="" width="96" height="80" />
+          <img class="dither theme-dark" src={url('/art/cup-empty.dark.png')} alt="" width="96" height="80" />
+          <p>This lesson is still being written. The cup fills up as soon as it is ready.</p>
+        </div>
+        <section class="card" aria-labelledby="soon-h">
+          <h2 id="soon-h">What it will cover</h2>
+          <ul>
+            {lesson.objectives.map((o) => (
+              <li>{o}</li>
+            ))}
+          </ul>
+        </section>
+        <p>
+          <a class="btn" href={pathHref}>
+            Back to the {track.title} path
+          </a>
+        </p>
+      </div>
+    )
+  }
+</Base>

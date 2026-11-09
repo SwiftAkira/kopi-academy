@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/paths';
+---
+
+<Base title="Help" section="help" description="How lessons work, keyboard shortcuts, and where your progress is kept.">
+  <div class="wrap wrap--narrow page">
+    <header class="page__head">
+      <h1>Help</h1>
+      <p class="lede">How the site works, in a couple of minutes.</p>
+    </header>
+
+    <div class="prose">
+      <h2>How a lesson goes</h2>
+      <ol>
+        <li><strong>Warm-up.</strong> Three questions from earlier lessons. Questions you got wrong come back first.</li>
+        <li><strong>Video.</strong> Three to five minutes on one idea. The written notes and a transcript sit under it.</li>
+        <li><strong>Quiz.</strong> A few quick questions. Every answer has an explanation.</li>
+        <li>
+          <strong>Notebook.</strong> Four to six exercises. Run it in the browser, open it in Colab, or download it. Hints stay
+          folded until you open them.
+        </li>
+        <li><strong>Exam corner.</strong> One question in the style of the real exam, with the answer behind a button.</li>
+      </ol>
+      <p>A lesson takes about 25 to 30 minutes. You can leave at any point and pick up at the exact step you were on.</p>
+
+      <h2>Keyboard shortcuts</h2>
+      <div class="tablewrap" tabindex="0" role="region" aria-label="Keyboard shortcuts">
+      <table>
+        <thead>
+          <tr><th scope="col">Key</th><th scope="col">What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><kbd class="kbd">Enter</kbd></td><td>The main action: check an answer, continue to the next step</td></tr>
+          <tr><td><kbd class="kbd">→</kbd></td><td>Next step</td></tr>
+          <tr><td><kbd class="kbd">←</kbd></td><td>Previous step</td></tr>
+          <tr><td><kbd class="kbd">1</kbd> to <kbd class="kbd">4</kbd></td><td>Pick an answer</td></tr>
+          <tr><td><kbd class="kbd">?</kbd></td><td>Show the shortcut list on any page</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>
+        The arrow keys keep their normal job when you are choosing between answers, typing, or using the video player.
+      </p>
+
+      <h2>The path, the cups and the schedule</h2>
+      <p>
+        Each course has a path of lessons in course order. A lesson is a cup: empty until you start, full once you finish.
+        Nothing is locked, so you can take lessons in any order.
+      </p>
+      <p>
+        The Today card follows a suggested schedule of one lesson per course per weekday. A lesson from an earlier day that you
+        have not done yet is marked "Catch up". In <a href={url('/settings/')}>Settings</a> you can set your own start date and
+        exam dates, or switch the dates off and go at your own pace.
+      </p>
+
+      <h2>Warm-ups and spaced repetition</h2>
+      <p>
+        A question you miss in a quiz returns in a warm-up one day later, then three days after that, then seven. Rating a
+        notebook "Hard" sends that lesson's questions through the same loop.
+      </p>
+
+      <h2>XP and streaks</h2>
+      <p>
+        You earn XP for right answers, finished notebooks and finished lessons. A streak counts the days in a row on which you
+        did something. Weekends never break a streak. If you miss a day, the count simply starts again.
+      </p>
+
+      <h2>Your progress and your privacy</h2>
+      <p>
+        There are no accounts and nothing is sent anywhere. Progress lives in this browser. To use another device, export a
+        file in <a href={url('/settings/')}>Settings</a> and import it there. Clearing your browser data clears your progress.
+      </p>
+
+      <h2>Graded work</h2>
+      <p>
+        The exercises here are practice written for this site. They are deliberately different from the graded assignments
+        of both courses. Do your graded work yourself: the Python course does not allow AI help on it.
+      </p>
+
+      <h2>About this site</h2>
+      <p>
+        This is an unofficial study site made by a student. It is not affiliated with Vrije Universiteit Amsterdam, and
+        nothing here is official course material. If something on the site disagrees with your lecture, trust the lecture.
+      </p>
+    </div>
+  </div>
+</Base>

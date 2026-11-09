@@ -1,0 +1,104 @@
+---
+id: py-00
+track: python
+courseWeek: "3"
+title: Functions
+minutes: 30
+objectives:
+  - You can write a function with parameters, type hints and a return value.
+  - You can tell return from print and predict when a call gives back None.
+  - You can explain why a local variable is gone once the call ends.
+gradedAvoid:
+  - Codegrade From Scratch 3.1
+  - Python Assignment 1
+takeaways:
+  - "`def` only defines. Nothing inside runs until you call the function with brackets."
+  - "`return` hands a value back to the caller and ends the function. `print` only shows text."
+  - "Names made inside a function are local. They are gone when the call ends, so return what you need."
+trap: "A function that prints the right answer but has no `return` gives back `None`. The screen looks fine, but the caller and every test get `None`."
+---
+
+## A function is a recipe with a name
+
+Writing `def` stores a recipe. Nothing is cooked yet. The body runs only when you **call** the function, and calling means writing its name with brackets.
+
+```python
+def to_minutes(hours: int) -> int:
+    """Return the number of minutes in the given hours."""
+    return hours * 60
+
+to_minutes       # names the function, runs nothing
+to_minutes(2)    # calls it: the body runs with hours = 2
+```
+
+The course writes type hints on every parameter and on the return value, and a one-line docstring under the `def`. Do the same in your own answers.
+
+## Parameters and arguments
+
+- A **parameter** is a name in the `def` line. Here that is `hours`.
+- An **argument** is the value you pass in a call. Here that is `2`.
+
+Arguments are matched to parameters **by position**: first to first, second to second. Swap two arguments and Python will not complain unless the types clash. It just computes the wrong thing. If you name them in the call, the order stops mattering:
+
+```python
+def describe(name: str, age: int) -> str:
+    return f"{name} is {age}"
+
+describe("Sam", 19)            # by position
+describe(age=19, name="Sam")   # by name: same result
+```
+
+## return versus print
+
+This is the idea the exam leans on most.
+
+| | `print(value)` | `return value` |
+|---|---|---|
+| What it does | shows text on the screen | hands the value back to the caller |
+| What the call is worth | `None` | the value |
+| After it | the function carries on | the function stops at once |
+
+A call that returns something can be used anywhere a value can: stored in a variable, used in a sum, passed to another function.
+
+```python
+total = to_minutes(2) + to_minutes(1)   # 120 + 60
+```
+
+Had `to_minutes` printed instead of returned, both calls would be worth `None`, and `None + None` is a `TypeError`.
+
+## The None trap
+
+If a function reaches its end without meeting a `return`, Python returns `None` for you. That happens in two common ways: there is no `return` at all, or there is one that only some branches reach.
+
+```python
+def sign(n: int) -> str:
+    if n >= 0:
+        return "plus"
+    # a negative n falls off the end here: the call gives None
+```
+
+When a function is hinted `-> str` or `-> int`, check that **every** path through it ends in a `return`.
+
+## Local scope
+
+Parameters, and variables you create inside a function, are **local**. They come into being when the call starts and are gone when it ends.
+
+```python
+def make_total(a: int, b: int) -> int:
+    result = a + b
+    return result
+
+make_total(4, 5)
+print(result)    # NameError: result does not exist out here
+```
+
+The value 9 did come back, but nobody stored it. The repair is `total = make_total(4, 5)`. A local variable may even share its name with a variable outside the function. They are still two separate variables, and changing the inner one leaves the outer one alone.
+
+## From loop program to function
+
+Most from-scratch questions are a loop you already know, wrapped in a function. The recipe:
+
+1. Put the loop inside `def name(...):`.
+2. The data it works on becomes a parameter.
+3. The final `print(...)` becomes `return ...`, placed **after** the loop, not inside it.
+4. Call the function and store what it gives back.

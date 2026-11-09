@@ -1,0 +1,123 @@
+---
+// "Solve in browser": the practice notebook inside JupyterLite, with a code-loading state while it boots.
+import { ArrowLeft, ArrowSquareOut, DownloadSimple } from '@phosphor-icons/react/dist/ssr';
+import Base from '../../layouts/Base.astro';
+import { lessonById, trackById, type PublicLesson } from '../../lib/curriculum';
+import { allNotebooks, notebookLinks, notebookOf } from '../../lib/lesson-data';
+import { lessonPath, url } from '../../lib/paths';
+
+export function getStaticPaths() {
+  return allNotebooks().map(({ id }) => ({ params: { id }, props: { lesson: lessonById(id)! } }));
+}
+
+interface Props {
+  lesson: PublicLesson;
+}
+const { lesson } = Astro.props;
+const track = trackById(lesson.track);
+const nb = notebookOf(lesson.id)!;
+const links = notebookLinks(lesson, nb);
+const labSrc = url(`/lab/notebooks/index.html?path=${nb.file}`);
+const labProbe = url('/lab/jupyter-lite.json');
+const widths = [62, 38, 74, 51, 29, 66, 45];
+---
+
+<Base title={`Notebook: ${lesson.title}`} section={lesson.track} immersive>
+  <div class="nbpage">
+    <div class="nbpage__bar wrap">
+      <a class="btn btn--small" href={lessonPath(lesson.track, lesson.id)}>
+        <ArrowLeft weight="bold" aria-hidden="true" /> Back to the lesson
+      </a>
+      <div class="nbpage__title">
+        <p class="kicker">{track.title} practice notebook</p>
+        <h1>{lesson.title}</h1>
+      </div>
+      <a class="btn btn--small btn--quiet" href={links.download} download={links.filename}>
+        <DownloadSimple weight="bold" aria-hidden="true" /> <span>Download</span>
+      </a>
+    </div>
+
+    <div class="nbpage__stage wrap" id="nb-stage" data-src={labSrc} data-probe={labProbe} aria-busy="true">
+      <div class="nbpage__loading" id="nb-loading">
+        <div class="codeload">
+          {
+            widths.map((w, i) => (
+              <div class="codeload__line">
+                <span class="codeload__no" aria-hidden="true">
+                  {i + 1}
+                </span>
+                <span class:list={['codeload__fill', { 'codeload__fill--kw': i % 3 === 0 }]} style={`--w:${w}%;--i:${i}`} />
+                {i === widths.length - 1 && <span class="codeload__cursor" />}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <p role="status" id="nb-status" class="nbpage__status">Loading the notebook. The first start takes a little while, because Python itself is downloaded into your browser.</p>
+
+      <div class="nbpage__missing card" id="nb-missing" hidden>
+        <h2>The in-browser notebook is not available here</h2>
+        <p>
+          The JupyterLite build is missing on this copy of the site. You can still work on the notebook in Colab or on your
+          own machine.
+        </p>
+        <p class="nbpage__alts">
+          <a class="btn btn--primary" href={links.colab} target="_blank" rel="noopener noreferrer">
+            <ArrowSquareOut weight="bold" aria-hidden="true" /> Open in Colab <span class="vh">(opens in a new tab)</span>
+          </a>
+          <a class="btn" href={links.download} download={links.filename}>
+            <DownloadSimple weight="bold" aria-hidden="true" /> Download .ipynb
+          </a>
+        </p>
+      </div>
+
+      <noscript>
+        <p>JavaScript is needed to run the notebook in the browser. <a href={links.download}>Download the notebook</a> instead.</p>
+      </noscript>
+    </div>
+  </div>
+
+  <script>
+    const stage = document.getElementById('nb-stage');
+    const loading = document.getElementById('nb-loading');
+    const missing = document.getElementById('nb-missing');
+    const status = document.getElementById('nb-status');
+
+    async function start() {
+      if (!stage || !loading || !missing) return;
+      let ok = false;
+      try {
+        const res = await fetch(stage.dataset.probe!, { method: 'HEAD' });
+        ok = res.ok;
+      } catch {
+        ok = false;
+      }
+      if (!ok) {
+        loading.hidden = true;
+        missing.hidden = false;
+        stage.removeAttribute('aria-busy');
+        if (status) status.hidden = true;
+        return;
+      }
+      const frame = document.createElement('iframe');
+      frame.className = 'nbpage__frame';
+      frame.title = 'Practice notebook in JupyterLite';
+      frame.src = stage.dataset.src!;
+      frame.setAttribute('allow', 'clipboard-read; clipboard-write');
+      frame.addEventListener('load', () => {
+        // JupyterLite paints its own shell right after load; give it a beat, then hand over.
+        window.setTimeout(() => {
+          loading.hidden = true;
+          frame.dataset.ready = 'true';
+          stage.removeAttribute('aria-busy');
+          if (status) {
+            status.textContent = 'Notebook loaded.';
+            status.classList.add('vh');
+          }
+        }, 1200);
+      });
+      stage.appendChild(frame);
+    }
+    start();
+  </script>
+</Base>

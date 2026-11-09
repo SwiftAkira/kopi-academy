@@ -1,0 +1,69 @@
+{
+  "lesson": "py-00",
+  "questions": [
+    {
+      "id": "py-00-q1",
+      "type": "predict",
+      "prompt": "What does this program print?",
+      "code": "def double(n: int) -> int:\n    return n * 2\n\ndouble(4)\nprint(double(3))",
+      "options": ["6", "8 and then 6", "8", "Nothing"],
+      "answer": 0,
+      "explain": "`double(4)` returns 8, but nothing stores or prints that value, so it is thrown away. Only the `print` line shows something."
+    },
+    {
+      "id": "py-00-q2",
+      "type": "mc",
+      "prompt": "A function starts with `def area(width, height)` and is called with `area(3, 4)`. What are `3` and `4`?",
+      "options": ["Arguments", "Parameters", "Return values", "Local variables"],
+      "answer": 0,
+      "explain": "Parameters are the names in the `def` line, here `width` and `height`. Arguments are the values passed in the call."
+    },
+    {
+      "id": "py-00-q3",
+      "type": "predict",
+      "prompt": "What does this program print?",
+      "code": "def show_total(a: int, b: int) -> None:\n    print(a + b)\n\nresult = show_total(2, 5)\nprint(result)",
+      "options": ["7 and then None", "7 and then 7", "Only None", "Only 7"],
+      "answer": 0,
+      "explain": "The call prints 7 from inside the function. The function has no `return`, so `result` is `None`, and the last line prints that."
+    },
+    {
+      "id": "py-00-q4",
+      "type": "fill",
+      "prompt": "Fill in the blank so that the function hands its result back to the caller.",
+      "code": "def to_minutes(hours: int) -> int:\n    ____ hours * 60",
+      "accept": ["return"],
+      "placeholder": "one keyword",
+      "explain": "`return` gives the value back and ends the function. With `print` here, the call would be worth `None`."
+    }
+  ],
+  "coldWarmup": [
+    {
+      "id": "py-00-c1",
+      "type": "predict",
+      "prompt": "What is the last number this loop prints?",
+      "code": "for i in range(1, 4):\n    print(i * 2)",
+      "options": ["6", "8", "4", "3"],
+      "answer": 0,
+      "explain": "`range(1, 4)` gives 1, 2 and 3. The stop value 4 is not included, so the last line printed is 3 times 2."
+    },
+    {
+      "id": "py-00-c2",
+      "type": "predict",
+      "prompt": "What does this print?",
+      "code": "x = 7\nif x > 10:\n    print(\"a\")\nelif x > 5:\n    print(\"b\")\nelse:\n    print(\"c\")",
+      "options": ["b", "a", "c", "b and then c"],
+      "answer": 0,
+      "explain": "The first test fails, the `elif` test is true, so only that branch runs. The `else` is skipped once a branch has run."
+    },
+    {
+      "id": "py-00-c3",
+      "type": "predict",
+      "prompt": "What does this print?",
+      "code": "count = 0\nn = 10\nwhile n > 1:\n    n = n // 2\n    count += 1\nprint(count)",
+      "options": ["3", "2", "4", "5"],
+      "answer": 0,
+      "explain": "`n` goes from 10 to 5, then 2, then 1. That is three passes through the loop before `n > 1` is false."
+    }
+  ]
+}

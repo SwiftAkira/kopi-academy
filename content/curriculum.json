@@ -1,0 +1,568 @@
+{
+  "version": 1,
+  "phase": 1,
+  "tracks": [
+    {
+      "id": "python",
+      "title": "Python",
+      "course": "Introduction to Python Programming for AI",
+      "code": "XB_0145",
+      "examId": "python-midterm",
+      "examTitle": "Python midterm",
+      "blurb": "Functions, lists, dictionaries, strings and comprehensions, built up to from-scratch exam questions."
+    },
+    {
+      "id": "is",
+      "title": "Intelligent Systems",
+      "course": "Intelligent Systems",
+      "code": "XB_0031",
+      "examId": "is-partial-a",
+      "examTitle": "Intelligent Systems partial exam A",
+      "blurb": "Search, game trees, propositional logic and rule-based reasoning, all traced by hand."
+    }
+  ],
+  "lessons": [
+    {
+      "id": "py-00",
+      "track": "python",
+      "courseWeek": "3",
+      "group": "Week 3: functions and lists",
+      "title": "Functions",
+      "summary": "def, parameters vs arguments, return vs print, None, local scope",
+      "examTopic": "Functions",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can write a function with parameters, type hints and a return value.",
+        "You can tell return from print and predict when a call gives back None.",
+        "You can explain why a local variable is gone once the call ends."
+      ],
+      "gradedAvoid": [
+        "Codegrade From Scratch 3.1",
+        "Python Assignment 1"
+      ]
+    },
+    {
+      "id": "py-01",
+      "track": "python",
+      "courseWeek": "3",
+      "group": "Week 3: functions and lists",
+      "title": "Lists basics",
+      "summary": "indexing, negative indexes, slicing, len, in, append, insert, pop, remove",
+      "examTopic": "Lists",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can read any element or slice of a list, including with negative indexes.",
+        "You can predict what len, in, append, insert, pop and remove do to a list."
+      ],
+      "gradedAvoid": [
+        "Codegrade From Scratch 3.2"
+      ]
+    },
+    {
+      "id": "py-02",
+      "track": "python",
+      "courseWeek": "3",
+      "group": "Week 3: functions and lists",
+      "title": "Looping over lists",
+      "summary": "for x in lst, range(len()), enumerate, and the accumulator patterns",
+      "examTopic": "Lists and loops",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can choose between for x in lst, range(len(lst)) and enumerate.",
+        "You can write the accumulator patterns from scratch: sum, count, max and filter into a new list."
+      ],
+      "gradedAvoid": [
+        "Codegrade From Scratch 3.2",
+        "Codegrade From Scratch 2.2"
+      ]
+    },
+    {
+      "id": "py-03",
+      "track": "python",
+      "courseWeek": "3",
+      "group": "Week 3: functions and lists",
+      "title": "Mutability",
+      "summary": "aliasing vs copying, changing a list vs returning a new one, nested lists",
+      "examTopic": "Lists and mutability",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can predict what happens when two names point at the same list.",
+        "You can write a function that changes a list in place and one that returns a new list, and say which is which.",
+        "You can read and update a nested list."
+      ],
+      "gradedAvoid": [
+        "Codegrade From Scratch 3.2",
+        "Python Assignment 1"
+      ]
+    },
+    {
+      "id": "py-04",
+      "track": "python",
+      "courseWeek": "4",
+      "group": "Week 4: dictionaries, tuples, sets and strings",
+      "title": "Dictionaries basics",
+      "summary": "keys and values, get, in, items(), adding and updating",
+      "examTopic": "Dictionaries",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can create, read, add and update key-value pairs.",
+        "You can avoid a KeyError with in or get.",
+        "You can loop over a dictionary with items()."
+      ],
+      "gradedAvoid": [
+        "Codegrade From Scratch 4.1",
+        "Codegrade From Scratch 2.1"
+      ]
+    },
+    {
+      "id": "py-05",
+      "track": "python",
+      "courseWeek": "4",
+      "group": "Week 4: dictionaries, tuples, sets and strings",
+      "title": "Dictionary patterns",
+      "summary": "counting, grouping into a dict of lists, inverting, dicts with functions",
+      "examTopic": "Dictionaries",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can count things with a dictionary.",
+        "You can group items into a dictionary of lists.",
+        "You can invert a dictionary and write functions that take or return one."
+      ],
+      "gradedAvoid": [
+        "Codegrade From Scratch 4.1",
+        "Codegrade From Scratch 4.2"
+      ]
+    },
+    {
+      "id": "py-06",
+      "track": "python",
+      "courseWeek": "4",
+      "group": "Week 4: dictionaries, tuples, sets and strings",
+      "title": "Tuples and sets",
+      "summary": "immutability, unpacking, set operations, when to use which",
+      "examTopic": "Tuples and sets",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can unpack a tuple and explain why it cannot be changed.",
+        "You can use set operations to answer membership and overlap questions.",
+        "You can choose between a list, tuple, set and dictionary for a task."
+      ],
+      "gradedAvoid": [
+        "Codegrade From Scratch 4.2",
+        "Codegrade From Scratch 2.2"
+      ]
+    },
+    {
+      "id": "py-07",
+      "track": "python",
+      "courseWeek": "3–4",
+      "group": "Week 4: dictionaries, tuples, sets and strings",
+      "title": "Strings",
+      "summary": "slicing again, split, join, strip, replace, lower, looping over characters, f-strings",
+      "examTopic": "Strings",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can slice and loop over a string the way you do with a list.",
+        "You can use split, join, strip, replace and lower in a small text task.",
+        "You can build output with f-strings."
+      ],
+      "gradedAvoid": [
+        "Python Assignment 0",
+        "Python Assignment 1"
+      ]
+    },
+    {
+      "id": "py-08",
+      "track": "python",
+      "courseWeek": "4",
+      "group": "Week 4: dictionaries, tuples, sets and strings",
+      "title": "Comprehensions",
+      "summary": "list and dict comprehensions, with if",
+      "examTopic": "Comprehensions",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can rewrite a loop that builds a list as a list comprehension.",
+        "You can add an if filter to a comprehension.",
+        "You can build a dictionary with a dict comprehension."
+      ],
+      "gradedAvoid": [
+        "Codegrade From Scratch 4.2"
+      ]
+    },
+    {
+      "id": "py-09",
+      "track": "python",
+      "courseWeek": "review 1–2",
+      "group": "Review",
+      "title": "Conditionals and loops, reviewed",
+      "summary": "while vs for, break, nested loops",
+      "examTopic": "Conditionals and loops",
+      "minutes": 15,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "done"
+      ],
+      "objectives": [
+        "You can choose between while and for and say why.",
+        "You can trace break and nested loops by hand."
+      ],
+      "gradedAvoid": [
+        "Codegrade From Scratch 1.2",
+        "Codegrade From Scratch 2.1",
+        "Codegrade From Scratch 2.2"
+      ]
+    },
+    {
+      "id": "py-10",
+      "track": "python",
+      "courseWeek": "midterm prep",
+      "group": "Midterm prep",
+      "title": "From-scratch drill",
+      "summary": "functions, lists and dictionaries mixed, in exam style",
+      "examTopic": "From-scratch questions",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can write a full function from a blank cell without notes.",
+        "You can combine lists, dictionaries and functions in one solution."
+      ],
+      "gradedAvoid": [
+        "Codegrade From Scratch 1.2 to 5.2",
+        "Python Assignment 1"
+      ]
+    },
+    {
+      "id": "py-11",
+      "track": "python",
+      "courseWeek": "midterm prep",
+      "group": "Midterm prep",
+      "title": "Mini mock",
+      "summary": "a 45-minute practical-style set, then a review of your mistakes",
+      "examTopic": "Whole midterm",
+      "minutes": 60,
+      "steps": [
+        "warmup",
+        "video",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can finish a practical-style set within 45 minutes.",
+        "You can find your own weak spots from your mistakes list."
+      ],
+      "gradedAvoid": [
+        "Codegrade From Scratch 1.2 to 5.2",
+        "Python Assignment 1"
+      ]
+    },
+    {
+      "id": "is-01",
+      "track": "is",
+      "courseWeek": "1",
+      "group": "Week 1: state spaces and uninformed search",
+      "title": "Uninformed search",
+      "summary": "state spaces, BFS, DFS, iterative deepening and uniform cost, with a properties table",
+      "examTopic": "Uninformed search",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can describe a problem as a state space with states, actions and a goal test.",
+        "You can trace BFS, DFS, iterative deepening and uniform cost search by hand.",
+        "You can compare them on completeness, optimality, time and space."
+      ],
+      "gradedAvoid": [
+        "IS Assignment 1",
+        "IS Assignment 2 (uninformed search part)"
+      ]
+    },
+    {
+      "id": "is-02",
+      "track": "is",
+      "courseWeek": "2",
+      "group": "Week 2: informed and adversarial search",
+      "title": "Informed search",
+      "summary": "heuristics, admissible vs consistent, greedy best-first vs A*, traced by hand",
+      "examTopic": "Informed search",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can check whether a heuristic is admissible and whether it is consistent.",
+        "You can trace greedy best-first search and A* with f = g + h by hand.",
+        "You can say when A* is guaranteed to find the cheapest path."
+      ],
+      "gradedAvoid": [
+        "IS Assignment 2 (informed search part)"
+      ]
+    },
+    {
+      "id": "is-03",
+      "track": "is",
+      "courseWeek": "2",
+      "group": "Week 2: informed and adversarial search",
+      "title": "Adversarial search",
+      "summary": "minimax and alpha-beta pruning by hand on game trees",
+      "examTopic": "Adversarial search",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can compute minimax values on a game tree by hand.",
+        "You can run alpha-beta pruning and mark exactly which branches are cut."
+      ],
+      "gradedAvoid": [
+        "IS Assignment 3"
+      ]
+    },
+    {
+      "id": "is-04",
+      "track": "is",
+      "courseWeek": "3",
+      "group": "Week 3: logic",
+      "title": "Logic 1: meaning",
+      "summary": "syntax vs semantics, interpretations, models, satisfiable and valid, entailment, truth tables",
+      "examTopic": "Propositional logic",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can tell syntax, semantics and calculus apart.",
+        "You can decide with a truth table whether a formula is satisfiable, valid or unsatisfiable.",
+        "You can check entailment by comparing models."
+      ],
+      "gradedAvoid": [
+        "IS Assignment 4"
+      ]
+    },
+    {
+      "id": "is-05",
+      "track": "is",
+      "courseWeek": "3",
+      "group": "Week 3: logic",
+      "title": "Logic 2: CNF",
+      "summary": "converting a formula to conjunctive normal form, step by step",
+      "examTopic": "CNF conversion",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can convert a propositional formula to CNF one step at a time.",
+        "You can spot which step went wrong in a faulty conversion."
+      ],
+      "gradedAvoid": [
+        "IS Assignment 4"
+      ]
+    },
+    {
+      "id": "is-06",
+      "track": "is",
+      "courseWeek": "3",
+      "group": "Week 3: logic",
+      "title": "Logic 3: DPLL",
+      "summary": "DPLL by hand, and the pseudocode from memory",
+      "examTopic": "DPLL",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can run DPLL by hand with unit propagation, pure literals and splitting.",
+        "You can fill in the DPLL pseudocode from memory."
+      ],
+      "gradedAvoid": [
+        "IS Assignment 4"
+      ]
+    },
+    {
+      "id": "is-07",
+      "track": "is",
+      "courseWeek": "4",
+      "group": "Week 4: reasoning and knowledge graphs",
+      "title": "Rules and knowledge graphs",
+      "summary": "modus ponens, and-elimination, De Morgan, forward reasoning, RDF triples",
+      "examTopic": "Rule-based reasoning and knowledge graphs",
+      "minutes": 30,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can apply modus ponens, and-elimination and De Morgan in a forward-reasoning chain.",
+        "You can read and write facts as RDF triples.",
+        "You can derive new facts from a small knowledge graph."
+      ],
+      "gradedAvoid": [
+        "IS Assignment 4"
+      ]
+    },
+    {
+      "id": "is-08",
+      "track": "is",
+      "courseWeek": "exam prep",
+      "group": "Exam prep",
+      "title": "Mixed exam drill",
+      "summary": "a mini mock across every topic, plus exam strategy",
+      "examTopic": "Whole partial exam",
+      "minutes": 35,
+      "steps": [
+        "warmup",
+        "video",
+        "quiz",
+        "notebook",
+        "exam",
+        "done"
+      ],
+      "objectives": [
+        "You can switch between search, logic and reasoning questions in one sitting.",
+        "You can plan your time across the whole exam."
+      ],
+      "gradedAvoid": [
+        "IS Assignments 1 to 5"
+      ]
+    },
+    {
+      "id": "is-09",
+      "track": "is",
+      "courseWeek": "exam prep",
+      "group": "Exam prep",
+      "title": "Exam warm-up",
+      "summary": "ten quick questions across every topic",
+      "examTopic": "Whole partial exam",
+      "minutes": 10,
+      "steps": [
+        "quiz",
+        "done"
+      ],
+      "objectives": [
+        "You can recall the key definitions and properties without notes.",
+        "You can walk in knowing which traps to watch for."
+      ],
+      "gradedAvoid": [
+        "IS Assignments 1 to 5"
+      ]
+    }
+  ]
+}

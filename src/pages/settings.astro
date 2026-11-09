@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import SettingsPanel from '../islands/SettingsPanel.tsx';
+import schedule from '../../content/schedule/2026-p2.json';
+---
+
+<Base title="Settings" section="settings" description="Theme, schedule, exam dates and moving your progress between devices.">
+  <div class="wrap wrap--narrow page">
+    <header class="page__head">
+      <h1>Settings</h1>
+      <p class="lede">Everything here is saved on this device only.</p>
+    </header>
+    <SettingsPanel client:load schedule={schedule} />
+  </div>
+</Base>

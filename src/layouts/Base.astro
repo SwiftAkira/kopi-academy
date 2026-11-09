@@ -1,0 +1,233 @@
+---
+import '../styles/global.css';
+import { House, Code, TreeStructure, Gear, Question, CircleHalf, Fire, CoffeeBean, X } from '@phosphor-icons/react/dist/ssr';
+import frauncesUrl from '@fontsource-variable/fraunces/files/fraunces-latin-full-normal.woff2?url';
+import bodyFontUrl from '@fontsource-variable/atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-wght-normal.woff2?url';
+import CupMark from '../components/CupMark.astro';
+import { SITE, STORAGE_KEY } from '../lib/site';
+import { url } from '../lib/paths';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** which main section is current, for the nav */
+  section?: 'home' | 'python' | 'is' | 'settings' | 'help' | 'none';
+  /** lesson pages swap the phone tab bar for the lesson action bar */
+  immersive?: boolean;
+}
+
+const { title, description = SITE.description, section = 'none', immersive = false } = Astro.props;
+const pageTitle = title ? `${title} · ${SITE.name}` : `${SITE.name}: ${SITE.tagline}`;
+
+const nav = [
+  { id: 'home', label: 'Today', href: url('/'), Icon: House },
+  { id: 'python', label: 'Python', href: url('/python/'), Icon: Code },
+  { id: 'is', label: 'Intelligent Systems', short: 'IS', href: url('/is/'), Icon: TreeStructure },
+  { id: 'settings', label: 'Settings', href: url('/settings/'), Icon: Gear },
+] as const;
+
+const art = (stem: string, theme: string) => `url(${url(`/art/${stem}.${theme}.png`)})`;
+const artVars = (theme: 'light' | 'dark') =>
+  [
+    `--art-band-clay:${art('band-clay', theme)}`,
+    `--art-band-ink:${art('band-ink', theme)}`,
+    `--art-band-hero:${art('band-hero', theme)}`,
+    `--art-band-soft:${art('band-soft', theme)}`,
+    `--art-rise-soft:${art('rise-soft', theme)}`,
+    `--art-tile-soft:${art('tile-soft', theme)}`,
+    `--art-tile-faint:${art('tile-faint', theme)}`,
+    `--art-tile-clay:${art('tile-clay', theme)}`,
+    `--art-sweep:${art('sweep', theme)}`,
+    `--art-cup-full:${art('cup-full', theme)}`,
+    `--art-tile-code:${art('tile-ink', 'dark')}`,
+  ].join(';');
+const artCss = `:root{${artVars('light')}}:root[data-theme=dark]{${artVars('dark')}}@media (prefers-color-scheme:dark){:root:not([data-theme]){${artVars('dark')}}}`;
+
+const favicon =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><circle cx="23" cy="24" r="21" fill="#F4EADB" stroke="#2B1B12" stroke-width="3"/><rect x="33" y="20" width="13" height="8" rx="4" fill="#FFFDF8" stroke="#2B1B12" stroke-width="3"/><circle cx="23" cy="24" r="13.5" fill="#FFFDF8" stroke="#2B1B12" stroke-width="3"/><circle cx="23" cy="24" r="9.5" fill="#D97757"/></svg>',
+  );
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#F4EADB" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1A110C" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href={favicon} />
+    <link rel="preload" as="font" type="font/woff2" href={bodyFontUrl} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={frauncesUrl} crossorigin />
+    <script is:inline define:vars={{ KEY: STORAGE_KEY }}>
+      // Set the theme before first paint so the page never flashes the wrong colours.
+      (function () {
+        var theme = 'system';
+        try {
+          var saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+          if (saved && saved.settings && saved.settings.theme) theme = saved.settings.theme;
+        } catch (e) {}
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+    <style is:inline set:html={artCss}></style>
+    <slot name="head" />
+  </head>
+  <body class:list={[{ 'has-tabbar': !immersive, immersive }]}>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="site-head">
+      <div class="site-head__in wrap">
+        <a class="wordmark" href={url('/')} aria-label={`${SITE.name}, home`}>
+          <CupMark level={1} />
+          <span>{SITE.name}</span>
+        </a>
+        <nav class="site-nav" aria-label="Main">
+          <ul>
+            {
+              nav.map((n) => (
+                <li>
+                  <a href={n.href} aria-current={section === n.id ? 'page' : undefined}>
+                    {n.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+        <div class="site-head__tools">
+          <p class="stats" id="site-stats" hidden>
+            <span class="stat stat--streak">
+              <Fire weight="bold" aria-hidden="true" />
+              <span class="vh">Streak in days: </span><span data-stat="streak">0</span>
+            </span>
+            <span class="stat stat--xp">
+              <CoffeeBean weight="bold" aria-hidden="true" />
+              <span class="vh">XP: </span><span data-stat="xp">0</span>
+            </span>
+          </p>
+          <a class="iconbtn" href={url('/help/')} id="help-open" aria-label="Help and keyboard shortcuts">
+            <Question weight="bold" aria-hidden="true" />
+          </a>
+          <button class="iconbtn" type="button" id="theme-toggle" aria-label="Switch between light and dark">
+            <CircleHalf weight="bold" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+
+    <footer class="site-foot">
+      <div class="site-foot__in wrap">
+        <p>
+          <strong>{SITE.name} is an unofficial study site made by a student.</strong> It is not affiliated with, endorsed by
+          or reviewed by Vrije Universiteit Amsterdam. Every explanation, exercise and question here is original. Do your
+          graded work yourself.
+        </p>
+        <ul>
+          <li><a href={url('/help/')}>Help and shortcuts</a></li>
+          <li><a href={url('/settings/')}>Settings and progress</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    {
+      !immersive && (
+        <nav class="tabbar" aria-label="Main, bottom bar">
+          <ul>
+            {nav.map((n) => (
+              <li>
+                <a href={n.href} aria-current={section === n.id ? 'page' : undefined}>
+                  <n.Icon weight="bold" aria-hidden="true" />
+                  <span>{'short' in n ? n.short : n.label}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+
+    <dialog class="dialog" id="help-dialog" aria-labelledby="help-dialog-h">
+      <div class="dialog__in">
+        <div class="dialog__head">
+          <h2 id="help-dialog-h">Keyboard shortcuts</h2>
+          <form method="dialog">
+            <button class="iconbtn" aria-label="Close"><X weight="bold" aria-hidden="true" /></button>
+          </form>
+        </div>
+        <dl class="keys">
+          <dt><kbd class="kbd">Enter</kbd></dt>
+          <dd>Do the main action: check an answer, continue</dd>
+          <dt><kbd class="kbd">→</kbd> <kbd class="kbd">←</kbd></dt>
+          <dd>Next step, previous step</dd>
+          <dt><kbd class="kbd">1</kbd> to <kbd class="kbd">4</kbd></dt>
+          <dd>Pick an answer</dd>
+          <dt><kbd class="kbd">?</kbd></dt>
+          <dd>Show this list</dd>
+          <dt><kbd class="kbd">Esc</kbd></dt>
+          <dd>Close this list</dd>
+        </dl>
+        <p class="hint">
+          The step shortcuts work inside a lesson. <a href={url('/help/')}>More help</a>
+        </p>
+      </div>
+    </dialog>
+
+    <script>
+      import { getState, subscribe, currentStreak, setTheme } from '../lib/store';
+
+      // header counters
+      const stats = document.getElementById('site-stats');
+      const paintStats = () => {
+        if (!stats) return;
+        const s = getState();
+        const streak = stats.querySelector('[data-stat="streak"]');
+        const xp = stats.querySelector('[data-stat="xp"]');
+        if (streak) streak.textContent = String(currentStreak(s));
+        if (xp) xp.textContent = String(s.xp);
+        stats.hidden = s.xp === 0 && currentStreak(s) === 0;
+      };
+      paintStats();
+      subscribe(paintStats);
+
+      // theme toggle
+      document.getElementById('theme-toggle')?.addEventListener('click', () => {
+        const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = next;
+        setTheme(next);
+      });
+
+      // help: the button opens a dialog; without JavaScript it is a plain link to the help page
+      const dialog = document.getElementById('help-dialog') as HTMLDialogElement | null;
+      const openHelp = () => {
+        if (dialog && !dialog.open) dialog.showModal();
+      };
+      document.getElementById('help-open')?.addEventListener('click', (e) => {
+        if (!dialog || location.pathname.endsWith('/help/')) return;
+        e.preventDefault();
+        openHelp();
+      });
+      dialog?.addEventListener('click', (e) => {
+        if (e.target === dialog) dialog.close();
+      });
+      window.addEventListener('keydown', (e) => {
+        if (e.key !== '?' || e.metaKey || e.ctrlKey || e.altKey) return;
+        const t = e.target as HTMLElement | null;
+        if (t && (t.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(t.tagName))) return;
+        e.preventDefault();
+        openHelp();
+      });
+    </script>
+  </body>
+</html>
