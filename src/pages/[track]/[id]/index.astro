@@ -81,6 +81,7 @@ const bank = bankOf(lesson.track).filter((q) => q.lesson !== lesson.id);
         notebook={nb ? notebookLinks(lesson, nb) : null}
         takeaways={entry!.data.takeaways}
         trap={entry!.data.trap}
+        hasTranscript={Boolean(Transcript)}
         next={nextLesson ? { title: nextLesson.title, href: lessonPath(nextLesson.track, nextLesson.id), kicker: 'Next lesson' } : null}
       >
         {Notes && (

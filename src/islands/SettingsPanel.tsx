@@ -6,7 +6,7 @@ import { Skeleton } from './steps';
 import { Ic } from './icons';
 
 const THEMES: { id: ThemePref; label: string }[] = [
-  { id: 'system', label: 'Match my device' },
+  { id: 'system', label: 'Device' },
   { id: 'light', label: 'Light' },
   { id: 'dark', label: 'Dark' },
 ];
@@ -64,7 +64,7 @@ export default function SettingsPanel({ schedule }: { schedule: ScheduleFile }) 
             </label>
           ))}
         </fieldset>
-        <p className="hint">Motion follows your device setting. If you ask your device to reduce motion, animations here turn into simple fades.</p>
+        <p className="hint">"Device" follows the light or dark setting of your phone or computer. Motion follows your device setting too. If you ask your device to reduce motion, animations here turn into simple fades.</p>
       </section>
 
       <section className="card settings__block" aria-labelledby="set-sched">

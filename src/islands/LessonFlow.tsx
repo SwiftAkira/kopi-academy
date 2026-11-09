@@ -40,6 +40,8 @@ export interface LessonFlowProps {
   takeaways: string[];
   trap: string;
   next: NextLink | null;
+  /** Astro hands over a slot even when it is empty, so the page says whether a transcript exists */
+  hasTranscript?: boolean;
   /** static HTML slots rendered by Astro */
   notes?: ReactNode;
   transcript?: ReactNode;
@@ -298,7 +300,7 @@ export default function LessonFlow(props: LessonFlowProps) {
           )}
           {section(
             'video',
-            <VideoStep active={stepId === 'video'} video={video} title={lesson.title} notes={props.notes} transcript={props.transcript} />,
+            <VideoStep active={stepId === 'video'} video={video} title={lesson.title} notes={props.notes} transcript={props.hasTranscript ? props.transcript : undefined} />,
           )}
           {section(
             'quiz',
