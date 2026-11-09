@@ -102,6 +102,7 @@ export const QuestionCard = forwardRef<QuestionCardHandle, Props>(function Quest
                     name={name}
                     value={i}
                     checked={picked}
+                    aria-labelledby={`${name}-opt-${i}` + (graded && (state === 'correct' || state === 'wrong') ? ` ${name}-tag-${i}` : '')}
                     aria-disabled={graded || undefined}
                     onChange={() => !graded && onSelect(i)}
                   />
@@ -109,11 +110,20 @@ export const QuestionCard = forwardRef<QuestionCardHandle, Props>(function Quest
                     {state === 'correct' ? <Ic.Check /> : state === 'wrong' ? <Ic.Close /> : shown + 1}
                   </span>
                   <span
+                    id={`${name}-opt-${i}`}
                     className={q.codeOptions ? 'opt__text opt__text--code' : 'opt__text'}
                     dangerouslySetInnerHTML={{ __html: q.codeOptions ? escapeHtml(opt) : inlineMd(opt) }}
                   />
-                  {graded && state === 'correct' && <span className="opt__tag">Right answer</span>}
-                  {graded && state === 'wrong' && <span className="opt__tag">Your answer</span>}
+                  {graded && state === 'correct' && (
+                    <span className="opt__tag" id={`${name}-tag-${i}`}>
+                      {picked ? 'Your answer, right' : 'Right answer'}
+                    </span>
+                  )}
+                  {graded && state === 'wrong' && (
+                    <span className="opt__tag" id={`${name}-tag-${i}`}>
+                      Your answer
+                    </span>
+                  )}
                 </label>
               );
             })}

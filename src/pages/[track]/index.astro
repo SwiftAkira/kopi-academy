@@ -4,7 +4,7 @@ import CupMark from '../../components/CupMark.astro';
 import { groupsOf, lessonsOf, tracks, type Track } from '../../lib/curriculum';
 import { hasContent } from '../../lib/lesson-data';
 import { lessonPath } from '../../lib/paths';
-import schedule from '../../../content/schedule/2026-p2.json';
+import schedule from '../../lib/active-schedule';
 
 export function getStaticPaths() {
   return tracks.map((t) => ({ params: { track: t.id }, props: { track: t } }));

@@ -155,3 +155,28 @@ test('no page scrolls sideways at 320 px', async ({ page }) => {
     expect(overflow, `${path} overflows by ${overflow}px at 320px`).toBeLessThanOrEqual(0);
   }
 });
+
+test.describe('with reduced motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+
+  test('the lesson still works and nothing keeps moving', async ({ page }) => {
+    await page.goto('python/py-00/');
+    await expect(step(page, 'warmup').locator('.q')).toBeVisible();
+    // jump straight to the last step with the step buttons: nothing is locked
+    await page.locator('.stepbar__btn').last().click();
+    const done = step(page, 'done');
+    await expect(done.getByRole('heading', { name: 'Lesson done' })).toBeVisible();
+    // the burst is drawn as a still image right away, and no animation is left running
+    await page.waitForTimeout(300);
+    const state = await page.evaluate(() => {
+      const c = document.querySelector<HTMLCanvasElement>('.done__burst')!;
+      const data = c.getContext('2d')!.getImageData(0, 0, c.width, c.height).data;
+      let lit = 0;
+      for (let i = 3; i < data.length; i += 4) if (data[i] > 0) lit += 1;
+      const running = document.getAnimations().filter((a) => a.playState === 'running').length;
+      return { lit, running };
+    });
+    expect(state.lit, 'the still burst has pixels').toBeGreaterThan(100);
+    expect(state.running, 'no CSS animation is running').toBe(0);
+  });
+});
