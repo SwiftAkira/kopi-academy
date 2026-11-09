@@ -1,0 +1,98 @@
+---
+id: py-02
+track: python
+courseWeek: "3"
+title: Looping over lists
+minutes: 30
+objectives:
+  - You can choose between for x in lst, range(len(lst)) and enumerate.
+  - "You can write the accumulator patterns from scratch: sum, count, max and filter into a new list."
+gradedAvoid:
+  - Codegrade From Scratch 3.2
+  - Codegrade From Scratch 2.2
+takeaways:
+  - "`for level in levels` gives the items. `for i in range(len(levels))` gives the positions. `enumerate(levels)` gives both."
+  - "Every accumulator has three steps: a start value before the loop, an update inside the loop, the result after the loop."
+  - "A sum and a count start at 0. A largest-so-far starts at the first item. A filter starts with an empty list."
+trap: "A largest-so-far that starts at 0 gives a wrong answer when every value is negative. Start with the first item: `highest = levels[0]`."
+---
+
+## Three ways to walk through a list
+
+A river sensor stores one water level per hour. The levels are in cm above (positive) or below (negative) the normal line.
+
+```python
+levels = [-4, 12, 7, -9, 15]
+```
+
+| Loop | What each round gives you | Use it when |
+|---|---|---|
+| `for level in levels:` | the item | you only need the values |
+| `for i in range(len(levels)):` | the position `i`, and the item is `levels[i]` | you need the position, or you want to change items |
+| `for i, level in enumerate(levels):` | the position and the item together | you need both |
+
+```python
+for i in range(len(levels)):
+    print(i, levels[i])
+
+for i, level in enumerate(levels):
+    print(i, level)        # prints the same five lines
+```
+
+`range(len(levels))` gives 0, 1, 2, 3, 4. Those are exactly the valid indexes. `enumerate` is a shorter way to get the same pairs. Make sure you can also write the `range(len(...))` form by hand.
+
+Do not mix the styles. In `for level in levels`, the name `level` is the item itself, so `levels[level]` is wrong.
+
+## The accumulator pattern
+
+Most loop questions follow one pattern with three steps:
+
+1. **Before** the loop: give a variable its start value.
+2. **Inside** the loop: update it.
+3. **After** the loop: use the result.
+
+A **sum** and a **count** both start at 0:
+
+```python
+total = 0
+count = 0
+for level in levels:
+    total += level
+    if level > 10:
+        count += 1
+print(total, count)        # 21 2
+```
+
+## The largest so far
+
+Keep the best value you have seen. Replace it when a bigger one comes.
+
+```python
+highest = levels[0]
+for level in levels:
+    if level > highest:
+        highest = level
+# highest is 15
+```
+
+Start with the first item, not with 0. Take the levels `[-4, -9, -2]`. If `highest` starts at 0, no level is ever bigger, and the answer is 0. The sensor never measured that level.
+
+## Filter into a new list
+
+The start value is an empty list and the update is `append`.
+
+```python
+high_levels = []
+for level in levels:
+    if level > 10:
+        high_levels.append(level)
+# high_levels is [12, 15], and levels is unchanged
+```
+
+## Where it goes wrong
+
+- **The start value is inside the loop.** Then it is reset on every round, and only the last item counts.
+- **The `return` or the final `print` is inside the loop.** Then the answer comes after the first item. The result belongs after the loop.
+- **You assign to the loop variable.** `level = 0` changes only the name `level`, not the list. To change the list you need the position: `levels[i] = 0`.
+
+The built-ins `sum(levels)`, `max(levels)`, `min(levels)` and `len(levels)` do some of these jobs in one call. You may use them, but an exam question can ask for the loop, so practise writing it yourself.

@@ -1,0 +1,71 @@
+---
+style: Fix the bug
+---
+
+**Fix the bug.** The function below contains bugs. Read what it should do, find where it goes wrong, explain the problems and write a corrected version.
+
+A small shop gets a delivery. The function should give back the stock after the delivery as a **new list**. The two lists it receives must stay as they are.
+
+```python
+def add_delivery(stock: list[str], delivery: list[str]) -> list[str]:
+    """
+    Return a new list: the items in stock, followed by the delivered items.
+    The lists stock and delivery are not changed.
+
+    Example:
+    >>> shelf = ["tea", "rice"]
+    >>> print(add_delivery(shelf, ["oats"]))
+    ['tea', 'rice', 'oats']
+    >>> print(shelf)
+    ['tea', 'rice']
+    """
+    new_stock = stock
+    for item in delivery:
+        new_stock = new_stock.append(item)
+    return new_stock
+```
+
+**a)** Describe the 2 issues that you found.
+
+**b)** What do the two `print` lines of the example show when you run them with this buggy function?
+
+**c)** What corrections are needed? Write the corrected function body.
+
+<Answer>
+
+**a) The two issues**
+
+1. `new_stock = stock` does not copy the list. It gives the caller's list a second name. Every `append` through `new_stock` also changes `stock`, so the shop's own list is changed. The docstring promises that this does not happen.
+2. `new_stock = new_stock.append(item)` stores the result of `append`. `append` changes the list and returns `None`, so after the first item `new_stock` is `None`.
+
+**b) The output with the bugs**
+
+Trace the example. `new_stock` and `shelf` are the same list. In the first round `"oats"` is appended to that list, and then `new_stock` becomes `None`. The loop ends and the function returns `None`.
+
+```text
+None
+['tea', 'rice', 'oats']
+```
+
+With a delivery of two or more items it is worse: the second round calls `append` on `None`, and the program stops with an `AttributeError`.
+
+**c) The corrected body**
+
+```python
+    new_stock = stock[:]
+    for item in delivery:
+        new_stock.append(item)
+    return new_stock
+```
+
+`stock[:]` makes a real copy, and `list(stock)` does the same. `append` now stands on a line of its own. A body with only `return stock + delivery` is also correct, because `+` builds a new list.
+
+What a marker looks for:
+
+- **Both issues are named with the reason**, not only repaired. "An assignment does not copy a list" and "`append` returns `None`" are the two sentences that earn the marks.
+- **The copy is made before the loop.** Then the caller's `shelf` still prints `['tea', 'rice']`.
+- **The function returns a list on every path**, as the hint `-> list[str]` says.
+- **The output in b) is traced, not guessed.** Many answers say the first line is the full list, because that is what the function should do.
+- The function header, the type hints and the docstring stay as they are. Only the body changes.
+
+</Answer>

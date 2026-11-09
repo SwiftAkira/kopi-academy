@@ -1,0 +1,100 @@
+---
+id: py-01
+track: python
+courseWeek: "3"
+title: Lists basics
+minutes: 30
+objectives:
+  - You can read any element or slice of a list, including with negative indexes.
+  - You can predict what len, in, append, insert, pop and remove do to a list.
+gradedAvoid:
+  - Codegrade From Scratch 3.2
+takeaways:
+  - "Indexes start at 0. The last item is `stops[-1]`, which is the same as `stops[len(stops) - 1]`."
+  - "A slice `stops[i:j]` starts at index `i`, stops before index `j` and gives back a new list."
+  - "`append`, `insert` and `remove` change the list and return `None`. `pop` changes the list and returns the item it took out."
+trap: "`append` changes the list itself and returns `None`. Write `stops.append(x)` on a line of its own. `stops = stops.append(x)` replaces your list with `None`."
+---
+
+## A list keeps items in order
+
+A list is a row of items between square brackets. Every item has a position, its **index**. Counting starts at 0.
+
+```python
+stops = ["Harbour", "Market", "Library", "Park", "Zoo"]
+
+stops[0]      # "Harbour", the first stop
+stops[2]      # "Library"
+len(stops)    # 5, the number of items
+stops[5]      # IndexError: the last index is 4
+```
+
+The last valid index is always `len(stops) - 1`. You can also replace an item: `stops[1] = "Museum"`.
+
+## Negative indexes count from the end
+
+```python
+stops[-1]     # "Zoo", the last stop
+stops[-2]     # "Park"
+```
+
+`stops[-1]` reaches the last item of any list that is not empty. You do not need `len` for it.
+
+## A slice takes a part of the list
+
+`stops[i:j]` gives a **new list**: the items from index `i` up to index `j`, but **without** the item at `j`.
+
+| Slice | Result |
+|---|---|
+| `stops[1:3]` | `["Market", "Library"]` |
+| `stops[:2]` | `["Harbour", "Market"]` |
+| `stops[3:]` | `["Park", "Zoo"]` |
+| `stops[1:-1]` | `["Market", "Library", "Park"]` |
+
+Leave out the start and the slice begins at the first item. Leave out the stop and it runs to the end. A quick check: `stops[i:j]` holds `j - i` items.
+
+An index that is too big crashes. A slice never does: `stops[3:99]` simply gives `["Park", "Zoo"]`.
+
+## in asks a yes or no question
+
+```python
+"Park" in stops          # True
+"park" in stops          # False, the capital letter matters
+"Airport" not in stops   # True
+```
+
+`in` compares whole items, and the match must be exact.
+
+## Four methods that change the list
+
+`len(stops)` is a function call. `stops.append("Zoo")` is a **method call**: the list comes first, then a dot. These methods change the list itself.
+
+| Call | What it does to the list | What it returns |
+|---|---|---|
+| `stops.append(x)` | adds `x` at the end | `None` |
+| `stops.insert(i, x)` | puts `x` at index `i`, later items move one place to the right | `None` |
+| `stops.pop()` | takes out the last item | that item |
+| `stops.pop(i)` | takes out the item at index `i` | that item |
+| `stops.remove(x)` | takes out the first item equal to `x` | `None` |
+
+```python
+stops = ["Harbour", "Market", "Library"]
+stops.append("Zoo")          # ["Harbour", "Market", "Library", "Zoo"]
+stops.insert(1, "School")    # ["Harbour", "School", "Market", "Library", "Zoo"]
+first = stops.pop(0)         # first is "Harbour"
+stops.remove("Library")      # ["School", "Market", "Zoo"]
+```
+
+`pop` works with a **position**. `remove` works with a **value**, and it raises a `ValueError` when that value is not in the list. Check with `in` first when you are not sure.
+
+## The None trap is back
+
+`append`, `insert` and `remove` return `None`. Their job is to change the list, not to hand a value back. So this line destroys your list:
+
+```python
+stops = stops.append("Airport")   # stops is now None
+```
+
+Write `stops.append("Airport")` on a line of its own. Only `pop` gives something useful back: the item it removed.
+
+When Python prints a list of strings, it shows them with single quotes: `['Park', 'Zoo']`. They are the same strings.

@@ -1,0 +1,63 @@
+---
+style: From scratch
+---
+
+**From scratch.** A river sensor stores one water level per hour in a list. The levels are whole numbers in cm: a positive number is above the normal line, a negative number is below it. The first level belongs to hour 0, the next one to hour 1, and so on.
+
+Write a function `peak_hour(levels: list[int]) -> int` that returns the hour with the highest level.
+
+Constraints and rules:
+
+- Hours are counted from 0, like indexes.
+- If the highest level occurs more than once, return the **first** hour with that level.
+- For an empty list, return `-1`. This is an error code: there is no peak.
+- Write the loop yourself. Do not use `max`, `sorted` or the list method `index`.
+- The function must not change the list. It must **return** the hour, not print it.
+- Give the function type hints and a docstring.
+
+Expected results:
+
+| Call | Result |
+|---|---|
+| `peak_hour([3, 12, 7])` | `1` |
+| `peak_hour([-4, -9, -2])` | `2` |
+| `peak_hour([5, 8, 8, 1])` | `1` |
+| `peak_hour([6])` | `0` |
+| `peak_hour([])` | `-1` |
+
+<Answer>
+
+```python
+def peak_hour(levels: list[int]) -> int:
+    """Return the hour with the highest level, or -1 for an empty list."""
+    if len(levels) == 0:
+        return -1
+    best_hour = 0
+    for hour in range(1, len(levels)):
+        if levels[hour] > levels[best_hour]:
+            best_hour = hour
+    return best_hour
+```
+
+How to get there:
+
+1. **Read the table first.** The results are positions, not levels. So you need a loop that knows the position: `range(len(levels))` or `enumerate`.
+2. **Deal with the empty list first.** After that guard, `levels[0]` is safe to read.
+3. **Use the largest-so-far pattern, but remember the position.** The start value is hour 0, the first item. It is not the level 0.
+4. **Update with `>`.** A later level that is only equal does not replace the first one.
+5. **Return after the loop**, when every level has been compared.
+
+Check with `[5, 8, 8, 1]`: `best_hour` starts at 0. Hour 1 has 8, which is more than 5, so `best_hour` becomes 1. Hour 2 has 8, which is not more than 8, so nothing changes. Hour 3 has 1. The result is 1.
+
+What a marker looks for:
+
+- **The guard for the empty list** comes before any indexing. Without it, `levels[0]` raises an `IndexError`.
+- **The start value is the first item.** A version that starts with a best level of 0 fails the row with only negative levels.
+- **`>` and not `>=`.** With `>=` the row `[5, 8, 8, 1]` gives 2, the last hour with the highest level.
+- **The result is a position.** Returning `levels[best_hour]` answers a different question.
+- **One `return best_hour`, after the loop.** A `return` inside the loop ends the function at the first comparison.
+- Type hints, a docstring, and no `max`, `sorted` or `index`.
+
+A version with `for hour, level in enumerate(levels):` and the test `level > levels[best_hour]` is just as good.
+
+</Answer>

@@ -1,0 +1,92 @@
+---
+id: py-03
+track: python
+courseWeek: "3"
+title: Mutability
+minutes: 30
+objectives:
+  - You can predict what happens when two names point at the same list.
+  - You can write a function that changes a list in place and one that returns a new list, and say which is which.
+  - You can read and update a nested list.
+gradedAvoid:
+  - Codegrade From Scratch 3.2
+  - Python Assignment 1
+takeaways:
+  - "`backup = stock` gives the same list a second name. `stock[:]` or `list(stock)` makes a real copy."
+  - "A function that receives a list works on the caller's list. `append` or `counts[i] = ...` inside the function changes it for the caller."
+  - "In `shelves[r][c]` the first index picks the inner list and the second index picks the item in it."
+trap: "`backup = stock` is not a backup. Both names point at the same list, so a change through one name shows through the other. Make a copy with `stock[:]`."
+---
+
+## Two names, one list
+
+A list is **mutable**: you can change it after it is made. That has a consequence when a list gets a second name.
+
+```python
+stock = ["tea", "rice"]
+backup = stock             # no copy: a second name for the same list
+backup.append("oats")
+print(stock)               # ['tea', 'rice', 'oats']
+```
+
+An assignment never copies a list. `backup = stock` puts a second name on the list that already exists. This is called **aliasing**. There is one list, so a change through one name is visible through the other.
+
+Numbers and strings are **immutable**: nothing can change them in place. That is why you never noticed this with `b = a` for a number.
+
+## A real copy
+
+```python
+spare = stock[:]           # or: spare = list(stock)
+spare.append("salt")
+print(stock)               # ['tea', 'rice', 'oats'], unchanged
+```
+
+A full slice builds a **new list** with the same items. From now on each list changes alone.
+
+Two tests look alike but ask different questions. `==` asks: is the content equal? `is` asks: is it the same list? Right after `spare = stock[:]`, `spare == stock` is `True` and `spare is stock` is `False`. For an alias both are `True`.
+
+## Functions: change the list, or return a new one
+
+A list that you pass to a function is **the caller's list**, not a copy. The parameter is one more name for it.
+
+```python
+def restock(counts: list[int], amount: int) -> None:
+    """Add amount to every count in the list."""
+    for i in range(len(counts)):
+        counts[i] += amount
+
+def restocked(counts: list[int], amount: int) -> list[int]:
+    """Return a new list with amount added to every count."""
+    result = []
+    for count in counts:
+        result.append(count + amount)
+    return result
+```
+
+| | `restock` | `restocked` |
+|---|---|---|
+| Return hint | `-> None` | `-> list[int]` |
+| The caller's list | is changed | stays as it is |
+| How you call it | `restock(counts, 5)` | `new_counts = restocked(counts, 5)` |
+
+The signature and the docstring tell you which kind you have. When you write one yourself, pick one of the two. Do not do both.
+
+Only a change **to the list itself** reaches the caller: `append`, `pop`, `counts[i] = ...`. An assignment to the parameter name, such as `counts = counts + [1]`, builds a new local list. The caller sees nothing.
+
+## Nested lists
+
+A list can hold other lists. Here every inner list is one shelf, with the number of boxes per product.
+
+```python
+shelves = [[4, 0, 6], [2, 5, 1]]
+
+shelves[1]           # [2, 5, 1], the second shelf
+shelves[1][0]        # 2: first pick shelf 1, then item 0
+shelves[0][2] = 9    # update one item
+len(shelves)         # 2 shelves
+len(shelves[0])      # 3 items on the first shelf
+```
+
+Two loops visit every item: `for shelf in shelves:` and inside it `for count in shelf:`.
+
+Aliasing matters here too. `shelves[:]` copies only the outer list, so the inner lists are still shared. And `[[0] * 3] * 2` gives two rows that are one and the same list: change one item and both rows change.

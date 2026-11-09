@@ -1,0 +1,54 @@
+{
+  "lesson": "py-03",
+  "questions": [
+    {
+      "id": "py-03-q1",
+      "type": "predict",
+      "prompt": "What does this program print?",
+      "code": "stock = [\"tea\", \"rice\"]\nbackup = stock\nbackup.append(\"oats\")\nprint(stock)",
+      "options": [
+        "['tea', 'rice', 'oats']",
+        "['tea', 'rice']",
+        "['oats', 'tea', 'rice']",
+        "None"
+      ],
+      "answer": 0,
+      "codeOptions": true,
+      "explain": "`backup = stock` does not copy the list. It gives the same list a second name, so the `append` through `backup` is also visible through `stock`. The trap is to think of `backup` as a separate list. A real copy needs `stock[:]` or `list(stock)`."
+    },
+    {
+      "id": "py-03-q2",
+      "type": "predict",
+      "prompt": "One function changes the list it receives, the other returns a new list. What does this program print?",
+      "code": "def add_one(counts: list[int]) -> None:\n    for i in range(len(counts)):\n        counts[i] += 1\n\ndef plus_one(counts: list[int]) -> list[int]:\n    result = []\n    for count in counts:\n        result.append(count + 1)\n    return result\n\nstock = [3, 0]\nplus_one(stock)\nadd_one(stock)\nprint(stock)",
+      "options": ["[4, 1]", "[5, 2]", "[3, 0]", "None"],
+      "answer": 0,
+      "codeOptions": true,
+      "explain": "`plus_one` builds a new list and returns it. Nobody stores that result, and `stock` stays `[3, 0]`. `add_one` assigns to `counts[i]`, and `counts` is the caller's list, so `stock` becomes `[4, 1]`. The trap is to think that both calls change `stock`, or that a function always works on a copy."
+    },
+    {
+      "id": "py-03-q3",
+      "type": "predict",
+      "prompt": "What does this program print?",
+      "code": "shelves = [[4, 0, 6], [2, 5, 1]]\nshelves[0][1] = shelves[1][2] + 3\nprint(shelves[0], len(shelves), len(shelves[1]))",
+      "options": [
+        "[4, 4, 6] 2 3",
+        "[4, 8, 6] 2 3",
+        "[4, 4, 6] 3 2",
+        "[4, 4, 6] 2 6"
+      ],
+      "answer": 0,
+      "codeOptions": true,
+      "explain": "`shelves[1][2]` picks the inner list at index 1 and then the item at index 2, which is 1. So `shelves[0][1]` becomes 4. `len(shelves)` counts the inner lists: 2. `len(shelves[1])` counts the items in one inner list: 3. The trap is to count an index from 1, or to mix up the two lengths."
+    },
+    {
+      "id": "py-03-q4",
+      "type": "fill",
+      "prompt": "Fill in the blank so that `backup` is a separate copy of the list and the program prints `['tea', 'rice']`.",
+      "code": "stock = [\"tea\", \"rice\"]\nbackup = ____\nstock.append(\"oats\")\nprint(backup)",
+      "accept": ["stock[:]", "list(stock)", "stock.copy()", "stock[0:]", "stock[:2]", "stock[0:2]"],
+      "placeholder": "an expression with stock",
+      "explain": "`stock[:]` and `list(stock)` both build a new list with the same items, so the later `append` to `stock` does not reach `backup`. The trap is `backup = stock`: that only gives the same list a second name, and the program would print three items."
+    }
+  ]
+}

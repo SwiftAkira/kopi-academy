@@ -1,0 +1,67 @@
+---
+style: Code tracing
+---
+
+**Code tracing.** A bus route is stored as a list of stop names. Read the code and trace it line by line.
+
+```python
+route = ["Depot", "Mill", "Bridge", "Square"]
+route.append("Station")
+first = route.pop(0)
+route.insert(2, "School")
+route.remove("Bridge")
+middle = route[1:3]
+print(first, route[-1], len(route))
+print(middle)
+print("Depot" in route)
+```
+
+**a)** Complete the table. Write the value of `route` after each statement has run.
+
+| Statement | `route` after this statement |
+|---|---|
+| `route.append("Station")` | |
+| `first = route.pop(0)` | |
+| `route.insert(2, "School")` | |
+| `route.remove("Bridge")` | |
+
+**b)** Write the three lines that the program prints, in order.
+
+<Answer>
+
+**a)** Trace one statement at a time. Always work on the list as it is at that moment.
+
+| Statement | `route` after this statement |
+|---|---|
+| `route.append("Station")` | `["Depot", "Mill", "Bridge", "Square", "Station"]` |
+| `first = route.pop(0)` | `["Mill", "Bridge", "Square", "Station"]` |
+| `route.insert(2, "School")` | `["Mill", "Bridge", "School", "Square", "Station"]` |
+| `route.remove("Bridge")` | `["Mill", "School", "Square", "Station"]` |
+
+The steps:
+
+1. `append` adds `"Station"` at the end. The list now has 5 items.
+2. `pop(0)` takes out the item at index 0 and returns it, so `first` is `"Depot"`. Every other item moves one place to the left.
+3. `insert(2, "School")` uses the indexes of the list as it is **now**. Index 2 holds `"Square"`, so `"School"` goes in front of it.
+4. `remove("Bridge")` looks for the value, not for a position.
+
+Then `middle = route[1:3]` takes index 1 and index 2. Index 3 is not included, so `middle` is `["School", "Square"]`.
+
+**b)** The output:
+
+```text
+Depot Station 4
+['School', 'Square']
+False
+```
+
+What a marker looks for:
+
+- **`pop` returns the item it removed.** `first` is `"Depot"`, not `None` and not the list.
+- **Indexes are counted again after every change.** If you insert at index 2 of the original list, you get the wrong order.
+- **The stop value of a slice is not included.** `route[1:3]` has two items, not three.
+- **`route[-1]` is the last item**, here `"Station"`, and `len(route)` is 4 after one `append`, one `pop`, one `insert` and one `remove`.
+- **`"Depot" in route` is `False`**, because `pop(0)` took that stop out of the list.
+- The printed list is written as Python prints it: square brackets and single quotes.
+
+</Answer>

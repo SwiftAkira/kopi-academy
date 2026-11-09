@@ -1,0 +1,59 @@
+{
+  "lesson": "py-01",
+  "questions": [
+    {
+      "id": "py-01-q1",
+      "type": "predict",
+      "prompt": "What does this program print?",
+      "code": "stops = [\"Harbour\", \"Market\", \"Library\", \"Park\", \"Zoo\"]\nprint(stops[-2], stops[1:3])",
+      "options": [
+        "Park ['Market', 'Library']",
+        "Park ['Market', 'Library', 'Park']",
+        "Library ['Market', 'Library']",
+        "Park ['Harbour', 'Market']"
+      ],
+      "answer": 0,
+      "codeOptions": true,
+      "explain": "`stops[-1]` is the last item, so `stops[-2]` is the one before it: Park. The slice `stops[1:3]` takes index 1 and index 2. The trap is the stop value: index 3 is **not** included, so the slice has two items."
+    },
+    {
+      "id": "py-01-q2",
+      "type": "predict",
+      "prompt": "What does this program print?",
+      "code": "queue = [5, 9, 2, 9]\nqueue.remove(9)\nqueue.insert(1, 7)\nlast = queue.pop()\nprint(queue, last)",
+      "options": [
+        "[5, 7, 2] 9",
+        "[5, 7] 2",
+        "[5, 2, 7] 9",
+        "[7, 2, 9] 5"
+      ],
+      "answer": 0,
+      "codeOptions": true,
+      "explain": "`remove(9)` takes out only the **first** 9, which gives `[5, 2, 9]`. `insert(1, 7)` puts 7 at index 1: `[5, 7, 2, 9]`. `pop()` takes out the last item and returns it, so `last` is 9. The trap is to think that `remove` deletes every 9."
+    },
+    {
+      "id": "py-01-q3",
+      "type": "predict",
+      "prompt": "What does this program print?",
+      "code": "stops = [\"Market\", \"Park\"]\nstops = stops.append(\"Zoo\")\nprint(stops)",
+      "options": [
+        "None",
+        "['Market', 'Park', 'Zoo']",
+        "['Zoo', 'Market', 'Park']",
+        "Zoo"
+      ],
+      "answer": 0,
+      "codeOptions": true,
+      "explain": "`append` changes the list and returns `None`. The second line stores that `None` in `stops`, so the list is lost. The trap is to expect `append` to give the longer list back. Write `stops.append(\"Zoo\")` on a line of its own."
+    },
+    {
+      "id": "py-01-q4",
+      "type": "fill",
+      "prompt": "Fill in the blank with an index, so that the code prints the last item of the list. It must also work when the list gets longer or shorter.",
+      "code": "stops = [\"Harbour\", \"Market\", \"Library\", \"Park\"]\nprint(stops[____])",
+      "accept": ["-1", "len(stops) - 1", "len(stops)-1"],
+      "placeholder": "an index",
+      "explain": "`stops[-1]` is always the last item, and `stops[len(stops) - 1]` is the same item. The trap is `stops[len(stops)]`: indexes start at 0, so that position does not exist and Python raises an `IndexError`."
+    }
+  ]
+}

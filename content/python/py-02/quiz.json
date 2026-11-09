@@ -1,0 +1,46 @@
+{
+  "lesson": "py-02",
+  "questions": [
+    {
+      "id": "py-02-q1",
+      "type": "predict",
+      "prompt": "This loop should count the levels above 5. What does it print?",
+      "code": "levels = [3, 12, 7, 15]\nfor level in levels:\n    count = 0\n    if level > 5:\n        count += 1\nprint(count)",
+      "options": ["1", "3", "4", "0"],
+      "answer": 0,
+      "explain": "The start value `count = 0` is **inside** the loop, so it is reset on every round. Only the last item, 15, is still counted, and the program prints 1. The trap is to read it as a normal count and answer 3. The start value belongs before the loop."
+    },
+    {
+      "id": "py-02-q2",
+      "type": "predict",
+      "prompt": "This loop should find the highest level. What does it print?",
+      "code": "levels = [-4, -9, -2]\nhighest = 0\nfor level in levels:\n    if level > highest:\n        highest = level\nprint(highest)",
+      "options": ["0", "-2", "-9", "-4"],
+      "answer": 0,
+      "explain": "No level in the list is bigger than 0, so `highest` never changes and the program prints 0. The trap is to answer -2, the real highest level. The loop only finds it when the start value is the first item: `highest = levels[0]`."
+    },
+    {
+      "id": "py-02-q3",
+      "type": "predict",
+      "prompt": "What does this program print?",
+      "code": "levels = [7, 12, 15]\nfor i, level in enumerate(levels):\n    if level > 10:\n        print(i, level)",
+      "options": [
+        "1 12 and then 2 15",
+        "2 12 and then 3 15",
+        "12 1 and then 15 2",
+        "0 7 and then 1 12 and then 2 15"
+      ],
+      "answer": 0,
+      "explain": "`enumerate` gives the position first and then the item, and positions start at 0. So 12 is at position 1 and 15 is at position 2. The trap is to count positions from 1, or to swap the two values."
+    },
+    {
+      "id": "py-02-q4",
+      "type": "fill",
+      "prompt": "Fill in the blank so that the loop visits every position of the list and the program prints `[1, 2, 4]`. It must also work when the list gets longer.",
+      "code": "levels = [-4, 12, 7, -9, 15]\nhigh_hours = []\nfor i in range(____):\n    if levels[i] > 5:\n        high_hours.append(i)\nprint(high_hours)",
+      "accept": ["len(levels)", "0, len(levels)", "0,len(levels)"],
+      "placeholder": "an expression",
+      "explain": "`range(len(levels))` gives 0, 1, 2, 3 and 4, exactly the valid indexes. The stop value is not included. The trap is `len(levels) + 1`: that runs one step too far, and `levels[5]` raises an `IndexError`."
+    }
+  ]
+}
