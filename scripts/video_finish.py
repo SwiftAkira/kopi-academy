@@ -124,18 +124,22 @@ def main() -> int:
         f.write("\n\n".join(parts) + "\n")
 
     # 4. captions from the word timings; each chapter starts where the previous chapter's clip ends
-    lines = ["WEBVTT", ""]
+    cues: list[tuple[float, float, str]] = []
     offset = 0.0
-    n = 0
     for i in range(len(chapters)):
         clip = os.path.join(work, "scenes", f"c{i + 1:02d}.mp4")
         lead = CH[i][3]
         for chunk in caption_chunks(spoken_words(os.path.join(work, "words", f"s{i + 1}.json"))):
-            n += 1
             start = offset + lead + chunk[0]["start"]
             end = offset + lead + chunk[-1]["end"] + 0.25
-            lines += [str(n), f"{stamp(start)} --> {stamp(end)}", " ".join(w["text"] for w in chunk), ""]
+            cues.append((start, end, " ".join(w["text"] for w in chunk)))
         offset += duration(clip)
+    lines = ["WEBVTT", ""]
+    n = len(cues)
+    for k, (start, end, text) in enumerate(cues):
+        if k + 1 < n:
+            end = min(end, cues[k + 1][0] - 0.02)  # a cue never overlaps the next one
+        lines += [str(k + 1), f"{stamp(start)} --> {stamp(max(end, start + 0.3))}", text, ""]
     with open(os.path.join(dest, "captions.vtt"), "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
 

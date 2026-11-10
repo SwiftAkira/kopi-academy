@@ -1,0 +1,325 @@
+WEBVTT
+
+1
+00:00:00.682 --> 00:00:04.182
+Eh, you know the DPLL solver coming in the next lesson?
+
+2
+00:00:04.202 --> 00:00:06.262
+It cannot read arrows one.
+
+3
+00:00:06.282 --> 00:00:08.772
+Give it if P then Q, it blur.
+
+4
+00:00:09.408 --> 00:00:13.068
+It only eats ONE shape: an AND of ORs.
+
+5
+00:00:13.088 --> 00:00:16.698
+That shape is CNF, clause normal form.
+
+6
+00:00:16.772 --> 00:00:18.672
+So today, 3 things lah.
+
+7
+00:00:18.692 --> 00:00:20.592
+What CNF is exactly.
+
+8
+00:00:20.612 --> 00:00:24.592
+The 5 steps that turn ANY formula into CNF, always the
+
+9
+00:00:24.612 --> 00:00:28.752
+same order. And the traps where people lose marks, especially 1
+
+10
+00:00:28.772 --> 00:00:30.432
+fellow called De Morgan.
+
+11
+00:00:30.452 --> 00:00:32.912
+In the exam you get a few formulas and a list
+
+12
+00:00:32.932 --> 00:00:35.872
+of clauses, and you tick the clauses that are really in
+
+13
+00:00:35.892 --> 00:00:39.022
+the CNF. So must be fast and steady.
+
+14
+00:00:41.001 --> 00:00:44.821
+First the words. A LITERAL is a letter or a negated
+
+15
+00:00:44.841 --> 00:00:47.261
+letter: P, not Q.
+
+16
+00:00:47.281 --> 00:00:51.941
+A CLAUSE is literals joined by or: P or not Q
+
+17
+00:00:51.961 --> 00:00:56.341
+or R. And CNF is clauses joined by and.
+
+18
+00:00:56.361 --> 00:00:58.621
+AND outside, OR inside.
+
+19
+00:00:58.641 --> 00:01:01.261
+The other way round, or of ands?
+
+20
+00:01:01.281 --> 00:01:04.061
+That one is DNF, wrong answer hor.
+
+21
+00:01:04.081 --> 00:01:06.701
+The course says clause normal form.
+
+22
+00:01:06.721 --> 00:01:09.291
+Conjunctive normal form, same thing lah.
+
+23
+00:01:09.325 --> 00:01:12.785
+Now the 5 steps, same ORDER every time.
+
+24
+00:01:12.805 --> 00:01:15.505
+Step 1: remove the double arrow.
+
+25
+00:01:15.525 --> 00:01:19.785
+A if and only if B become: if A then B,
+
+26
+00:01:19.805 --> 00:01:22.255
+and, if B then A.
+
+27
+00:01:22.285 --> 00:01:24.535
+Step 2: remove the arrow.
+
+28
+00:01:24.685 --> 00:01:28.495
+If A then B become: not A or B.
+
+29
+00:01:28.525 --> 00:01:32.505
+Step 3: push the not inward with De Morgan, and cancel
+
+30
+00:01:32.525 --> 00:01:33.495
+double not.
+
+31
+00:01:33.645 --> 00:01:36.775
+Step 4: distribute or over and.
+
+32
+00:01:36.845 --> 00:01:41.225
+A or, B and C, become: A or B, and, A
+
+33
+00:01:41.245 --> 00:01:41.975
+or C.
+
+34
+00:01:42.285 --> 00:01:44.695
+Step 5: read off the clauses.
+
+35
+00:01:44.847 --> 00:01:46.187
+Why this order ah?
+
+36
+00:01:46.207 --> 00:01:48.987
+Because a not cannot walk through an arrow.
+
+37
+00:01:49.007 --> 00:01:51.257
+So the arrows must go FIRST.
+
+38
+00:01:53.267 --> 00:01:55.407
+Okay, 1 library rule.
+
+39
+00:01:55.427 --> 00:01:57.567
+P: you may borrow.
+
+40
+00:01:57.587 --> 00:02:00.047
+Q: you got unpaid fine.
+
+41
+00:02:00.067 --> 00:02:02.527
+R: you got overdue book.
+
+42
+00:02:02.547 --> 00:02:07.117
+The rule: P if and only if not, Q or R.
+
+43
+00:02:07.191 --> 00:02:11.171
+Step 1: split the double arrow into 2 arrows, one for
+
+44
+00:02:11.191 --> 00:02:15.211
+each direction. Step 2: kill both arrows.
+
+45
+00:02:15.231 --> 00:02:19.051
+Left half: not P, or not, Q or R.
+
+46
+00:02:19.071 --> 00:02:22.771
+Right half: not not, Q or R, or P.
+
+47
+00:02:22.791 --> 00:02:25.371
+Step 3: push the nots in.
+
+48
+00:02:25.391 --> 00:02:29.811
+Left half, De Morgan: not, Q or R, become not Q
+
+49
+00:02:29.831 --> 00:02:33.731
+AND not R. The or flip to and, and BOTH get
+
+50
+00:02:33.751 --> 00:02:37.971
+a not. Right half, the not not cancel: Q or R
+
+51
+00:02:37.991 --> 00:02:41.571
+or P. Step 4: distribute the left half.
+
+52
+00:02:41.591 --> 00:02:45.811
+Not P or not Q, and, not P or not R.
+
+53
+00:02:45.831 --> 00:02:47.731
+Step 5: read off.
+
+54
+00:02:47.751 --> 00:02:50.771
+3 clauses. Not P or not Q.
+
+55
+00:02:50.791 --> 00:02:52.571
+Not P or not R.
+
+56
+00:02:52.591 --> 00:02:54.291
+P or Q or R.
+
+57
+00:02:54.311 --> 00:02:55.641
+Done already lah.
+
+58
+00:02:55.799 --> 00:02:58.398
+The order inside a clause no matter one.
+
+59
+00:02:58.418 --> 00:03:00.051
+Compare clauses like SETS.
+
+60
+00:03:00.071 --> 00:03:03.211
+And every step keeps the same truth table, so a table
+
+61
+00:03:03.231 --> 00:03:05.041
+can always check your answer.
+
+62
+00:03:07.191 --> 00:03:10.841
+Now the traps. Trap 1, De Morgan.
+
+63
+00:03:10.871 --> 00:03:14.771
+Not, P or Q, is NOT the clause not P or
+
+64
+00:03:14.791 --> 00:03:19.651
+not Q. The or must flip: not P AND not Q.
+
+65
+00:03:19.671 --> 00:03:21.851
+That is 2 unit clauses!
+
+66
+00:03:21.871 --> 00:03:25.011
+Forget the flip, 1 sign wrong, and the exam got that
+
+67
+00:03:25.031 --> 00:03:26.933
+wrong clause waiting for you.
+
+68
+00:03:26.953 --> 00:03:30.613
+Trap 2: not, if P then Q.
+
+69
+00:03:30.633 --> 00:03:32.893
+Cannot just push the not inside.
+
+70
+00:03:32.913 --> 00:03:36.853
+Remove the arrow first: not, not P or Q.
+
+71
+00:03:36.873 --> 00:03:39.657
+Then De Morgan: P and not Q.
+
+72
+00:03:39.677 --> 00:03:43.337
+Trap 3: a knowledge base with many sentences.
+
+73
+00:03:43.357 --> 00:03:47.417
+Convert each sentence ALONE, then put all the clauses in 1
+
+74
+00:03:47.437 --> 00:03:52.537
+set. And for entailment with DPLL, negate the question first, then
+
+75
+00:03:52.557 --> 00:03:53.367
+convert.
+
+76
+00:03:53.814 --> 00:03:58.937
+So remember: CNF is AND of ORs, 5 steps, arrows go
+
+77
+00:03:58.957 --> 00:04:03.737
+first. The practice notebook got 6 exercises: spot what is already
+
+78
+00:04:03.757 --> 00:04:07.497
+CNF, name the rule, find the wrong step, and a small
+
+79
+00:04:07.517 --> 00:04:10.407
+checker that compares your clauses with the truth table.
+
+80
+00:04:10.557 --> 00:04:13.497
+Graded work must be your own hor, the course does not
+
+81
+00:04:13.517 --> 00:04:15.687
+allow AI there. Jia you!

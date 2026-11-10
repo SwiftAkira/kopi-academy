@@ -1,0 +1,309 @@
+WEBVTT
+
+1
+00:00:00.682 --> 00:00:04.582
+Eh, quick one. It rains, and you carry umbrella.
+
+2
+00:00:04.602 --> 00:00:05.692
+You get WET or not?
+
+3
+00:00:07.182 --> 00:00:09.329
+Logic cannot answer by feeling one.
+
+4
+00:00:09.349 --> 00:00:12.182
+It needs a formula, and it needs to know which letters
+
+5
+00:00:12.202 --> 00:00:13.132
+are true.
+
+6
+00:00:13.246 --> 00:00:15.359
+So today, 4 things lah.
+
+7
+00:00:15.379 --> 00:00:20.546
+First, the 3 parts of a logic: syntax, semantics, calculus.
+
+8
+00:00:20.566 --> 00:00:24.266
+Second, how to build a truth table without kena the famous
+
+9
+00:00:24.286 --> 00:00:28.986
+arrow trap. Third, what is a MODEL, and the words satisfiable,
+
+10
+00:00:29.006 --> 00:00:34.666
+valid, unsatisfiable. Last one, entailment: when does a knowledge base force
+
+11
+00:00:34.686 --> 00:00:36.386
+a sentence to be true?
+
+12
+00:00:36.406 --> 00:00:39.016
+All pen and paper, same like the exam.
+
+13
+00:00:41.001 --> 00:00:42.501
+The 3 parts ah.
+
+14
+00:00:42.521 --> 00:00:46.261
+SYNTAX is spelling: this string, legal formula or not?
+
+15
+00:00:46.281 --> 00:00:48.821
+P arrow not Q, legal.
+
+16
+00:00:48.841 --> 00:00:51.451
+P arrow and Q, rubbish.
+
+17
+00:00:51.481 --> 00:00:55.701
+SEMANTICS is meaning: give every letter true or false, then the
+
+18
+00:00:55.721 --> 00:00:58.251
+formula also become true or false.
+
+19
+00:00:58.281 --> 00:01:01.221
+CALCULUS is the procedure to work it out, like a truth
+
+20
+00:01:01.241 --> 00:01:02.011
+table.
+
+21
+00:01:02.233 --> 00:01:03.861
+Now the 5 connectives.
+
+22
+00:01:03.881 --> 00:01:06.581
+Not, and, or: easy lah.
+
+23
+00:01:06.601 --> 00:01:10.741
+But the arrow, if P then Q, this one tricky.
+
+24
+00:01:10.761 --> 00:01:14.901
+It is false in only 1 row: P true, Q false.
+
+25
+00:01:14.921 --> 00:01:18.661
+A promise, broken. When P is false, where got promise to
+
+26
+00:01:18.681 --> 00:01:21.421
+break? So the arrow is TRUE.
+
+27
+00:01:21.441 --> 00:01:23.421
+False arrow true: true.
+
+28
+00:01:23.441 --> 00:01:25.901
+False arrow false: also true!
+
+29
+00:01:25.921 --> 00:01:28.851
+Alamak, most wrong cells come from here.
+
+30
+00:01:29.225 --> 00:01:33.461
+And the double arrow, P if and only if Q: true
+
+31
+00:01:33.481 --> 00:01:35.101
+when both sides SAME.
+
+32
+00:01:35.121 --> 00:01:36.851
+Both false also count hor.
+
+33
+00:01:38.867 --> 00:01:40.997
+Okay, build one table.
+
+34
+00:01:41.027 --> 00:01:45.327
+P: it rains. Q: you carry umbrella.
+
+35
+00:01:45.347 --> 00:01:47.247
+R: you get wet.
+
+36
+00:01:47.267 --> 00:01:52.127
+The sentence: rain makes you wet, AND umbrella keeps you dry.
+
+37
+00:01:52.147 --> 00:01:57.007
+In symbols: if P then R, and, if Q then not
+
+38
+00:01:57.027 --> 00:01:57.917
+R.
+
+39
+00:01:58.046 --> 00:02:02.207
+Step 1: 3 letters, so 2 times 2 times 2, 8
+
+40
+00:02:02.227 --> 00:02:06.607
+rows. Start with T T T, end with F F F,
+
+41
+00:02:06.627 --> 00:02:09.087
+the right letter flip fastest.
+
+42
+00:02:09.107 --> 00:02:11.287
+Step 2: helper columns.
+
+43
+00:02:11.307 --> 00:02:14.447
+Not R. Then if P then R.
+
+44
+00:02:14.467 --> 00:02:17.007
+Then if Q then not R.
+
+45
+00:02:17.027 --> 00:02:21.807
+Step 3: the whole formula LAST, just and the 2 helper
+
+46
+00:02:21.827 --> 00:02:23.237
+columns together.
+
+47
+00:02:23.484 --> 00:02:26.237
+Look at row 3: T, F, T.
+
+48
+00:02:26.387 --> 00:02:28.637
+Rain, no umbrella, wet.
+
+49
+00:02:28.707 --> 00:02:30.797
+Both rules happy, so T.
+
+50
+00:02:30.949 --> 00:02:35.009
+Now count the T in the last column: rows 3, 6,
+
+51
+00:02:35.029 --> 00:02:36.079
+7 and 8.
+
+52
+00:02:36.229 --> 00:02:39.409
+A MODEL is just a row that makes the formula true,
+
+53
+00:02:39.429 --> 00:02:42.319
+so 4 models. Got at least 1 model?
+
+54
+00:02:42.389 --> 00:02:43.599
+Satisfiable.
+
+55
+00:02:43.749 --> 00:02:45.169
+All 8 rows T?
+
+56
+00:02:45.189 --> 00:02:45.999
+Valid.
+
+57
+00:02:46.069 --> 00:02:46.719
+Zero?
+
+58
+00:02:46.789 --> 00:02:48.159
+Unsatisfiable.
+
+59
+00:02:48.309 --> 00:02:51.679
+Ours: satisfiable, but not valid lor.
+
+60
+00:02:53.743 --> 00:02:58.123
+Last idea, entailment. Put the 2 rules in a knowledge base,
+
+61
+00:02:58.143 --> 00:03:01.393
+KB. Its models are the same 4 rows.
+
+62
+00:03:01.423 --> 00:03:06.043
+KB entails alpha means: alpha is true in EVERY model of
+
+63
+00:03:06.063 --> 00:03:10.113
+KB. So cover the other rows, look at those 4 only.
+
+64
+00:03:10.147 --> 00:03:13.007
+Try this one: not, P and Q.
+
+65
+00:03:13.027 --> 00:03:17.167
+In rows 3, 6, 7 and 8, P and Q never
+
+66
+00:03:17.187 --> 00:03:19.887
+both true. So yes, entailed!
+
+67
+00:03:19.907 --> 00:03:24.167
+The 2 rules secretly say rain and umbrella never come together.
+
+68
+00:03:24.187 --> 00:03:26.517
+Wah, logic very strict sia.
+
+69
+00:03:26.553 --> 00:03:30.213
+Now try R. Row 6 is a model, but R is
+
+70
+00:03:30.233 --> 00:03:34.297
+false there. 1 counter-row is enough: NOT entailed.
+
+71
+00:03:34.317 --> 00:03:38.617
+So remember: the arrow is false only for true then false,
+
+72
+00:03:38.637 --> 00:03:41.897
+and entailed means true in ALL the models.
+
+73
+00:03:41.917 --> 00:03:46.497
+The practice notebook got 6 exercises: truth tables with gaps, model
+
+74
+00:03:46.517 --> 00:03:50.537
+or not, entailment by table, plus a small table printer to
+
+75
+00:03:50.557 --> 00:03:51.777
+check your hand work.
+
+76
+00:03:51.797 --> 00:03:54.857
+Graded work must be your own hor, the course does not
+
+77
+00:03:54.877 --> 00:03:56.887
+allow AI there. Jia you!

@@ -1,0 +1,277 @@
+WEBVTT
+
+1
+00:00:00.682 --> 00:00:04.022
+Eh, quick one. You got a list with 5 bus stops:
+
+2
+00:00:04.042 --> 00:00:07.542
+Harbour, Market, Library, Park, Zoo.
+
+3
+00:00:07.562 --> 00:00:09.832
+You ask Python for stop number 5.
+
+4
+00:00:10.729 --> 00:00:13.302
+Python crash, sia! IndexError.
+
+5
+00:00:13.322 --> 00:00:17.032
+How come? Got 5 stops, but where got index 5?
+
+6
+00:00:17.322 --> 00:00:19.649
+Today we settle list basics lah.
+
+7
+00:00:19.669 --> 00:00:22.102
+How to take 1 item with an index.
+
+8
+00:00:22.122 --> 00:00:25.222
+How to count from the BACK with a negative index.
+
+9
+00:00:25.242 --> 00:00:26.862
+How to cut a slice.
+
+10
+00:00:26.882 --> 00:00:31.062
+Then len, and in, and 4 methods that change the list:
+
+11
+00:00:31.082 --> 00:00:33.902
+append, insert, pop, remove.
+
+12
+00:00:33.922 --> 00:00:36.582
+Small topic, but the exam love it one.
+
+13
+00:00:36.602 --> 00:00:39.382
+After this, you can trace a list question by hand, no
+
+14
+00:00:39.402 --> 00:00:41.172
+need to anyhow guess.
+
+15
+00:00:43.165 --> 00:00:45.785
+So this list ah, we call it stops.
+
+16
+00:00:45.805 --> 00:00:49.055
+Python start counting at 0, NOT at 1.
+
+17
+00:00:49.085 --> 00:00:52.545
+Step 1: stops at index 0 is Harbour.
+
+18
+00:00:52.565 --> 00:00:56.265
+Step 2: len of stops is 5, so the last index
+
+19
+00:00:56.285 --> 00:00:58.505
+is 4, that one the Zoo.
+
+20
+00:00:58.525 --> 00:01:01.469
+Index 5? Don't have, so crash lor.
+
+21
+00:01:01.489 --> 00:01:05.149
+Step 3, the shortcut: stops at minus 1.
+
+22
+00:01:05.169 --> 00:01:08.909
+Negative index count from the back, so minus 1 is ALWAYS
+
+23
+00:01:08.929 --> 00:01:12.059
+the last item. Zoo already, no need len.
+
+24
+00:01:12.089 --> 00:01:15.429
+Now the slice: stops, 1 colon 3.
+
+25
+00:01:15.449 --> 00:01:17.389
+You get Market and Library only.
+
+26
+00:01:17.409 --> 00:01:20.829
+Why ah? Because the slice start AT index 1 and stop
+
+27
+00:01:20.849 --> 00:01:25.389
+BEFORE index 3. So 3 minus 1, that is 2 items.
+
+28
+00:01:25.409 --> 00:01:28.509
+Leave out the start, stops colon 2, you get the first
+
+29
+00:01:28.529 --> 00:01:32.189
+2 stops. Leave out the end, stops 3 colon, you get
+
+30
+00:01:32.209 --> 00:01:36.349
+Park and Zoo. And a slice very relaxed one: stops 3
+
+31
+00:01:36.369 --> 00:01:39.899
+colon 99 still give Park and Zoo, no crash.
+
+32
+00:01:40.119 --> 00:01:44.510
+The trap: people count 1, 2, 3 and write 3 stops.
+
+33
+00:01:44.530 --> 00:01:47.790
+Wrong leh! And a slice give you a NEW list, the
+
+34
+00:01:47.810 --> 00:01:49.660
+old list never change.
+
+35
+00:01:51.745 --> 00:01:53.645
+Next, the word in.
+
+36
+00:01:53.665 --> 00:01:55.645
+Park in stops? True.
+
+37
+00:01:55.665 --> 00:01:57.565
+But park with small p?
+
+38
+00:01:57.585 --> 00:02:00.355
+False lah, must match EXACTLY.
+
+39
+00:02:00.529 --> 00:02:01.965
+Now the 4 methods.
+
+40
+00:02:01.985 --> 00:02:04.205
+All of them change the list itself.
+
+41
+00:02:04.225 --> 00:02:08.325
+Start with 3 stops: Harbour, Market, Library.
+
+42
+00:02:08.345 --> 00:02:11.805
+Append Zoo: Zoo go to the END, like joining the hawker
+
+43
+00:02:11.825 --> 00:02:17.485
+queue. Insert 1, School: School take index 1, everybody behind shift
+
+44
+00:02:17.505 --> 00:02:21.565
+1 place. Pop 0: take out Harbour AND give it back
+
+45
+00:02:21.585 --> 00:02:25.765
+to you. Remove Library: find that VALUE, take it out.
+
+46
+00:02:25.785 --> 00:02:28.275
+Left with School, Market, Zoo.
+
+47
+00:02:28.295 --> 00:02:30.125
+Why got 2 ways to take out ah?
+
+48
+00:02:30.145 --> 00:02:33.925
+Because pop use the POSITION, remove use the value.
+
+49
+00:02:33.945 --> 00:02:37.725
+And if the value not inside, remove give you ValueError, so
+
+50
+00:02:37.745 --> 00:02:39.155
+check with in first.
+
+51
+00:02:39.825 --> 00:02:45.325
+Then the trap, sibei common: stops equals stops dot append Airport.
+
+52
+00:02:45.345 --> 00:02:46.235
+Alamak!
+
+53
+00:02:46.305 --> 00:02:49.995
+Append return None, so now your whole list become None.
+
+54
+00:02:50.065 --> 00:02:51.115
+Gone already.
+
+55
+00:02:51.345 --> 00:02:54.875
+Just write stops dot append on its own line, can already.
+
+56
+00:02:56.867 --> 00:03:02.367
+Okay, the one-line takeaway: index start at 0, slice stop BEFORE
+
+57
+00:03:02.387 --> 00:03:06.437
+the stop value, and append change the list but return None.
+
+58
+00:03:06.467 --> 00:03:10.087
+Only pop hand something back: the item it took out.
+
+59
+00:03:10.107 --> 00:03:13.087
+Remember these hor, then most list questions you can trace by
+
+60
+00:03:13.107 --> 00:03:14.077
+hand already.
+
+61
+00:03:14.291 --> 00:03:16.087
+Now go do the practice notebook.
+
+62
+00:03:16.107 --> 00:03:20.047
+Got 6 exercises, all about bus routes: 2 to predict, 2
+
+63
+00:03:20.067 --> 00:03:22.567
+fix the bug, 2 write from scratch.
+
+64
+00:03:22.587 --> 00:03:25.047
+Got a function there that keep asking for a stop that
+
+65
+00:03:25.067 --> 00:03:27.597
+does not exist, you go catch it.
+
+66
+00:03:27.671 --> 00:03:31.251
+Last thing: graded work must be your OWN, the course does
+
+67
+00:03:31.271 --> 00:03:32.851
+not allow AI on it.
+
+68
+00:03:32.871 --> 00:03:36.584
+So practise here until steady, then that one you do yourself.
+
+69
+00:03:36.604 --> 00:03:37.441
+Jia you!

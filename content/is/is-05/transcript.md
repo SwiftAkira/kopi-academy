@@ -1,0 +1,15 @@
+**Introduction**
+
+Eh, you know the DPLL solver coming in the next lesson? It cannot read arrows one. Give it if P then Q, it blur. It only eats ONE shape: an AND of ORs. That shape is CNF, clause normal form. So today, 3 things lah. What CNF is exactly. The 5 steps that turn ANY formula into CNF, always the same order. And the traps where people lose marks, especially 1 fellow called De Morgan. In the exam you get a few formulas and a list of clauses, and you tick the clauses that are really in the CNF. So must be fast and steady.
+
+**The words and the 5 steps**
+
+First the words. A LITERAL is a letter or a negated letter: P, not Q. A CLAUSE is literals joined by or: P or not Q or R. And CNF is clauses joined by and. AND outside, OR inside. The other way round, or of ands? That one is DNF, wrong answer hor. The course says clause normal form. Conjunctive normal form, same thing lah. Now the 5 steps, same ORDER every time. Step 1: remove the double arrow. A if and only if B become: if A then B, and, if B then A. Step 2: remove the arrow. If A then B become: not A or B. Step 3: push the not inward with De Morgan, and cancel double not. Step 4: distribute or over and. A or, B and C, become: A or B, and, A or C. Step 5: read off the clauses. Why this order ah? Because a not cannot walk through an arrow. So the arrows must go FIRST.
+
+**One formula, step by step**
+
+Okay, 1 library rule. P: you may borrow. Q: you got unpaid fine. R: you got overdue book. The rule: P if and only if not, Q or R. Step 1: split the double arrow into 2 arrows, one for each direction. Step 2: kill both arrows. Left half: not P, or not, Q or R. Right half: not not, Q or R, or P. Step 3: push the nots in. Left half, De Morgan: not, Q or R, become not Q AND not R. The or flip to and, and BOTH get a not. Right half, the not not cancel: Q or R or P. Step 4: distribute the left half. Not P or not Q, and, not P or not R. Step 5: read off. 3 clauses. Not P or not Q. Not P or not R. P or Q or R. Done already lah. The order inside a clause no matter one. Compare clauses like SETS. And every step keeps the same truth table, so a table can always check your answer.
+
+**Traps and takeaway**
+
+Now the traps. Trap 1, De Morgan. Not, P or Q, is NOT the clause not P or not Q. The or must flip: not P AND not Q. That is 2 unit clauses! Forget the flip, 1 sign wrong, and the exam got that wrong clause waiting for you. Trap 2: not, if P then Q. Cannot just push the not inside. Remove the arrow first: not, not P or Q. Then De Morgan: P and not Q. Trap 3: a knowledge base with many sentences. Convert each sentence ALONE, then put all the clauses in 1 set. And for entailment with DPLL, negate the question first, then convert. So remember: CNF is AND of ORs, 5 steps, arrows go first. The practice notebook got 6 exercises: spot what is already CNF, name the rule, find the wrong step, and a small checker that compares your clauses with the truth table. Graded work must be your own hor, the course does not allow AI there. Jia you!
