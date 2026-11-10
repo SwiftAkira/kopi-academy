@@ -1,0 +1,313 @@
+WEBVTT
+
+1
+00:00:00.682 --> 00:00:05.142
+Eh, truth table with 3 letters, 8 rows, okay lah.
+
+2
+00:00:05.162 --> 00:00:08.662
+But 20 letters? More than 1 MILLION rows.
+
+3
+00:00:08.682 --> 00:00:09.772
+Who got time?
+
+4
+00:00:10.288 --> 00:00:12.428
+DPLL is the smart way.
+
+5
+00:00:12.448 --> 00:00:15.708
+It hunts for 1 model, and every step throws away a
+
+6
+00:00:15.728 --> 00:00:17.228
+big chunk of the table.
+
+7
+00:00:17.248 --> 00:00:19.425
+No need to fill in every row.
+
+8
+00:00:19.782 --> 00:00:23.309
+Today, 4 things. The 1 move that DPLL makes.
+
+9
+00:00:23.329 --> 00:00:25.549
+The 3 rules that pick the move.
+
+10
+00:00:25.569 --> 00:00:28.349
+1 full trace by hand, exam style.
+
+11
+00:00:28.369 --> 00:00:31.549
+And the pseudocode, which the exam prints with gaps, so must
+
+12
+00:00:31.569 --> 00:00:32.779
+know by heart hor.
+
+13
+00:00:34.897 --> 00:00:38.544
+DPLL eats clauses, so CNF first.
+
+14
+00:00:38.564 --> 00:00:41.464
+The 1 move: make a literal TRUE.
+
+15
+00:00:41.484 --> 00:00:43.094
+Then 2 things happen.
+
+16
+00:00:43.244 --> 00:00:48.014
+Every clause that contains that literal is satisfied already: REMOVE it.
+
+17
+00:00:48.044 --> 00:00:52.304
+Every clause that contains the opposite literal: that literal is dead,
+
+18
+00:00:52.324 --> 00:00:53.894
+so SHORTEN the clause.
+
+19
+00:00:54.124 --> 00:00:57.894
+Example: P false means not P is true.
+
+20
+00:00:58.044 --> 00:01:00.614
+Clause not P or R: remove.
+
+21
+00:01:00.764 --> 00:01:03.694
+Clause P or R: become just R.
+
+22
+00:01:03.726 --> 00:01:05.226
+Which literal to pick?
+
+23
+00:01:05.246 --> 00:01:06.986
+3 rules, in order.
+
+24
+00:01:07.006 --> 00:01:11.106
+Rule 1, UNIT clause: a clause with only 1 literal.
+
+25
+00:01:11.126 --> 00:01:13.546
+No choice what, must make it true.
+
+26
+00:01:13.566 --> 00:01:17.466
+Rule 2, PURE literal: a letter that always show the same
+
+27
+00:01:17.486 --> 00:01:19.616
+sign. Just make it true lor.
+
+28
+00:01:19.646 --> 00:01:24.346
+Rule 3, SPLIT: no unit, no pure, then you choose.
+
+29
+00:01:24.366 --> 00:01:27.976
+By hand: first letter in the alphabet, FALSE first.
+
+30
+00:01:28.176 --> 00:01:29.466
+And when to stop?
+
+31
+00:01:29.486 --> 00:01:32.866
+No clauses left: satisfiable, shiok.
+
+32
+00:01:32.886 --> 00:01:37.226
+See Q and also not Q as unit clauses: contradiction, this
+
+33
+00:01:37.246 --> 00:01:38.856
+branch die already.
+
+34
+00:01:41.064 --> 00:01:45.164
+Now we trace. 5 clauses: not Q or not R.
+
+35
+00:01:45.184 --> 00:01:46.764
+Not P or Q.
+
+36
+00:01:46.784 --> 00:01:49.564
+P or R. Q or not R.
+
+37
+00:01:49.584 --> 00:01:52.128
+Q or R. Got unit clause?
+
+38
+00:01:52.148 --> 00:01:56.528
+No. Pure literal? No, every letter got both signs.
+
+39
+00:01:56.548 --> 00:01:59.008
+So split: P FALSE first.
+
+40
+00:01:59.028 --> 00:02:01.208
+Not P or Q: remove.
+
+41
+00:02:01.228 --> 00:02:03.568
+P or R: shorten to R.
+
+42
+00:02:03.588 --> 00:02:06.888
+Now 4 clauses, and R stand alone: unit!
+
+43
+00:02:06.908 --> 00:02:09.088
+So R true. What is left?
+
+44
+00:02:09.108 --> 00:02:11.038
+Not Q, and Q.
+
+45
+00:02:11.549 --> 00:02:15.651
+Alamak, contradiction. Both cannot be true what.
+
+46
+00:02:15.671 --> 00:02:19.971
+So BACKTRACK: go back to the original 5 clauses, this time
+
+47
+00:02:19.991 --> 00:02:23.051
+P true. P or R: remove.
+
+48
+00:02:23.071 --> 00:02:25.651
+Not P or Q: shorten to Q.
+
+49
+00:02:25.671 --> 00:02:27.971
+Unit Q, so Q true.
+
+50
+00:02:27.991 --> 00:02:31.971
+Only not R is left, unit again, so R false.
+
+51
+00:02:31.991 --> 00:02:34.735
+No clauses left! Satisfiable.
+
+52
+00:02:34.755 --> 00:02:38.215
+Model: P true, Q true, R false.
+
+53
+00:02:38.235 --> 00:02:41.842
+Notice ah, R true came from the dead branch, throw away.
+
+54
+00:02:41.862 --> 00:02:44.455
+The model comes from the branch that SURVIVED.
+
+55
+00:02:44.475 --> 00:02:46.775
+And if P true also die?
+
+56
+00:02:46.795 --> 00:02:49.765
+Then nothing left to try: unsatisfiable.
+
+57
+00:02:51.844 --> 00:02:53.904
+Last part, the pseudocode.
+
+58
+00:02:53.924 --> 00:02:56.134
+Same story, just written down.
+
+59
+00:02:56.164 --> 00:02:59.254
+DPLL of F and literal.
+
+60
+00:02:59.284 --> 00:03:02.744
+Line 1: remove clauses containing literal.
+
+61
+00:03:02.764 --> 00:03:06.384
+Line 2: shorten clauses containing not literal.
+
+62
+00:03:06.404 --> 00:03:08.424
+Mirror image, dun swap ah.
+
+63
+00:03:08.444 --> 00:03:12.864
+Then 3 ifs. F contains no clauses: return TRUE.
+
+64
+00:03:12.884 --> 00:03:15.984
+F contains empty clause: return FALSE.
+
+65
+00:03:16.004 --> 00:03:20.544
+F contains a unit or pure L: return DPLL of F
+
+66
+00:03:20.564 --> 00:03:23.024
+and L. Then the split.
+
+67
+00:03:23.044 --> 00:03:24.624
+Choose P in F.
+
+68
+00:03:24.644 --> 00:03:28.664
+If DPLL of F and not P: return true.
+
+69
+00:03:28.684 --> 00:03:32.224
+Else: return DPLL of F and P.
+
+70
+00:03:32.244 --> 00:03:34.869
+Not P first, that is your false first.
+
+71
+00:03:34.889 --> 00:03:39.029
+The trap: no clauses and empty clause sound the same, but
+
+72
+00:03:39.049 --> 00:03:41.949
+they are OPPOSITE. Empty set, you win.
+
+73
+00:03:41.969 --> 00:03:43.913
+Empty clause, you lose.
+
+74
+00:03:43.933 --> 00:03:49.953
+So remember: remove, shorten, unit, pure, split, false first.
+
+75
+00:03:49.973 --> 00:03:54.073
+The practice notebook got 3 full traces, the pseudocode with gaps,
+
+76
+00:03:54.093 --> 00:03:56.753
+and a small tracer to check every step.
+
+77
+00:03:56.773 --> 00:03:59.513
+Graded work must be your own hor, the course does not
+
+78
+00:03:59.533 --> 00:04:01.703
+allow AI there. Jia you!

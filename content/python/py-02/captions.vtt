@@ -1,0 +1,285 @@
+WEBVTT
+
+1
+00:00:00.679 --> 00:00:04.664
+Eh, imagine this. Got a sensor in the river, every hour
+
+2
+00:00:04.684 --> 00:00:06.504
+it save 1 water level.
+
+3
+00:00:06.524 --> 00:00:11.517
+After 5 hours you got 5 numbers: minus 4, 12, 7,
+
+4
+00:00:11.537 --> 00:00:13.134
+minus 9, 15.
+
+5
+00:00:13.164 --> 00:00:15.224
+Then people ask you 3 things.
+
+6
+00:00:15.244 --> 00:00:16.424
+What is the total?
+
+7
+00:00:16.444 --> 00:00:18.024
+How many above 10?
+
+8
+00:00:18.044 --> 00:00:19.302
+Which one the highest?
+
+9
+00:00:19.924 --> 00:00:22.144
+Sounds like 3 different problems, right?
+
+10
+00:00:22.164 --> 00:00:25.094
+Where got! Actually all the SAME pattern.
+
+11
+00:00:25.591 --> 00:00:27.304
+Today we do 2 things lah.
+
+12
+00:00:27.324 --> 00:00:30.064
+First, the 3 ways to walk through a list.
+
+13
+00:00:30.084 --> 00:00:35.064
+Second, the accumulator pattern: sum, count, max, and filter into a
+
+14
+00:00:35.084 --> 00:00:35.974
+new list.
+
+15
+00:00:36.124 --> 00:00:39.264
+Learn this pattern properly, a lot of loop questions in the
+
+16
+00:00:39.284 --> 00:00:41.014
+exam settle already.
+
+17
+00:00:42.999 --> 00:00:45.059
+The list we call levels.
+
+18
+00:00:45.079 --> 00:00:47.859
+Way 1: for level in levels.
+
+19
+00:00:47.879 --> 00:00:52.939
+Each round, level is the ITEM itself: minus 4, then 12,
+
+20
+00:00:52.959 --> 00:00:56.569
+then 7. Use this when you only need the values.
+
+21
+00:00:56.603 --> 00:01:00.303
+Way 2: for i in range len levels.
+
+22
+00:01:00.323 --> 00:01:05.183
+Now i is the POSITION: 0, 1, 2, 3, 4.
+
+23
+00:01:05.203 --> 00:01:09.663
+Stop value 5 not included, so exactly the valid indexes.
+
+24
+00:01:09.683 --> 00:01:11.943
+The item is levels at i.
+
+25
+00:01:11.963 --> 00:01:14.623
+Use this when you must know WHERE, or when you want
+
+26
+00:01:14.643 --> 00:01:16.303
+to change the list.
+
+27
+00:01:16.323 --> 00:01:20.423
+Way 3: for i, level in enumerate levels.
+
+28
+00:01:20.443 --> 00:01:24.343
+This one give you both together, position first, then item.
+
+29
+00:01:24.363 --> 00:01:26.664
+Shiok. Why need the position ah?
+
+30
+00:01:26.684 --> 00:01:30.824
+Because level equals 0 only change the name level, the list
+
+31
+00:01:30.844 --> 00:01:34.774
+never change. Must write levels at i equals 0.
+
+32
+00:01:34.994 --> 00:01:37.585
+The trap: dun mix the styles.
+
+33
+00:01:37.605 --> 00:01:40.745
+In way 1, level is already the item.
+
+34
+00:01:40.765 --> 00:01:44.345
+You write levels at level, now Python use minus 4 as
+
+35
+00:01:44.365 --> 00:01:46.855
+an INDEX. Nonsense already!
+
+36
+00:01:49.052 --> 00:01:51.610
+Now the pattern. Always 3 steps.
+
+37
+00:01:51.630 --> 00:01:55.280
+Step 1, BEFORE the loop: give a start value.
+
+38
+00:01:55.310 --> 00:01:58.450
+Step 2, INSIDE the loop: update.
+
+39
+00:01:58.470 --> 00:02:01.760
+Step 3, AFTER the loop: use the answer.
+
+40
+00:02:01.794 --> 00:02:06.614
+Sum: total equals 0, then total plus equals level.
+
+41
+00:02:06.634 --> 00:02:11.414
+End with 21. Count: count equals 0, and if level more
+
+42
+00:02:11.434 --> 00:02:14.134
+than 10, count plus equals 1.
+
+43
+00:02:14.154 --> 00:02:18.254
+End with 2. Filter: start with an EMPTY list, and if
+
+44
+00:02:18.274 --> 00:02:20.414
+level more than 10, append it.
+
+45
+00:02:20.434 --> 00:02:22.374
+You get 12 and 15.
+
+46
+00:02:22.394 --> 00:02:23.936
+Same 3 steps, see?
+
+47
+00:02:23.956 --> 00:02:26.496
+Then max, the highest so far.
+
+48
+00:02:26.516 --> 00:02:27.886
+What is the start value?
+
+49
+00:02:29.557 --> 00:02:31.577
+Many people write 0.
+
+50
+00:02:31.597 --> 00:02:32.367
+Aiyo.
+
+51
+00:02:32.677 --> 00:02:36.777
+Take the levels minus 4, minus 9, minus 2.
+
+52
+00:02:36.797 --> 00:02:40.657
+Nobody beat 0, so the answer is 0, but the sensor
+
+53
+00:02:40.677 --> 00:02:42.287
+NEVER measure 0!
+
+54
+00:02:42.570 --> 00:02:47.097
+So start with the first item: highest equals levels at 0.
+
+55
+00:02:47.117 --> 00:02:51.057
+Why ah? Because the first item confirm inside the list.
+
+56
+00:02:51.077 --> 00:02:55.777
+Another trap: start value INSIDE the loop will reset every round,
+
+57
+00:02:55.797 --> 00:02:57.777
+so keep it before the loop.
+
+58
+00:02:57.797 --> 00:02:59.497
+And return inside the loop?
+
+59
+00:02:59.517 --> 00:03:01.777
+The function stop at the first item.
+
+60
+00:03:01.797 --> 00:03:03.727
+The answer come AFTER.
+
+61
+00:03:05.734 --> 00:03:11.464
+The one-line takeaway: start BEFORE, update inside, answer after.
+
+62
+00:03:11.494 --> 00:03:14.914
+Sum and count start at 0, max start at the first
+
+63
+00:03:14.934 --> 00:03:18.184
+item, filter start with an empty list.
+
+64
+00:03:18.218 --> 00:03:22.508
+The practice notebook got 6 exercises with the same river sensor.
+
+65
+00:03:22.538 --> 00:03:25.878
+2 to predict, 2 fix the bug, then 2 you write
+
+66
+00:03:25.898 --> 00:03:29.638
+from scratch: keep only the calm levels, and find the first
+
+67
+00:03:29.658 --> 00:03:31.242
+hour the river flood.
+
+68
+00:03:31.262 --> 00:03:34.842
+And hor, graded work must be your OWN, the course does
+
+69
+00:03:34.862 --> 00:03:36.482
+not allow AI on it.
+
+70
+00:03:36.502 --> 00:03:39.882
+Practise here until steady, then that one you do yourself.
+
+71
+00:03:39.902 --> 00:03:41.672
+Can one lah. Jia you!
