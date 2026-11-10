@@ -109,7 +109,7 @@ export function pickWarmup(opts: {
         if (la !== lb) return lb - la;
         return a.id.localeCompare(b.id);
       });
-    // spread over lessons: at most two from the same lesson
+    // spread over lessons: at most two from the same lesson...
     const perLesson = new Map<string, number>();
     for (const q of pool) {
       if (picked.length >= count) break;
@@ -117,6 +117,11 @@ export function pickWarmup(opts: {
       if (n >= 2) continue;
       perLesson.set(q.lesson!, n + 1);
       picked.push(q);
+    }
+    // ...unless that leaves the warm-up short, as it does right after the first lesson of a track
+    for (const q of pool) {
+      if (picked.length >= count) break;
+      if (!has(q.id)) picked.push(q);
     }
   }
 

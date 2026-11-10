@@ -146,6 +146,11 @@ test('a student does a whole lesson and it resumes where they left off', async (
   expect(errors, 'no JavaScript errors during the walkthrough').toEqual([]);
 });
 
+test('the second lesson of a track still gets three warm-up questions', async ({ page }) => {
+  await page.goto('python/py-01/');
+  await expect(step(page, 'warmup').locator('.q__kicker')).toHaveText(/Question 1 of 3/);
+});
+
 test('no page scrolls sideways at 320 px', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 640 });
   for (const path of ['./', 'python/', 'python/py-00/', 'python/py-01/', 'settings/', 'help/']) {
