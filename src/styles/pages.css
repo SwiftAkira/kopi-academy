@@ -177,7 +177,7 @@ a.today__row:active {
 .today__title {
   font-family: var(--font-display);
   font-weight: 600;
-  font-variation-settings: 'SOFT' 100, 'WONK' 0;
+  font-variation-settings: 'SOFT' 100;
   font-size: var(--t-1);
   line-height: 1.2;
 }
@@ -255,7 +255,7 @@ a.today__row:active {
 .ticket__num {
   font-family: var(--font-display);
   font-weight: 650;
-  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-variation-settings: 'SOFT' 100;
   font-size: 2.6rem;
   line-height: 0.95;
   font-variant-numeric: tabular-nums;
@@ -318,7 +318,7 @@ a.today__row:active {
   display: block;
   font-family: var(--font-display);
   font-weight: 650;
-  font-variation-settings: 'SOFT' 100, 'WONK' 0;
+  font-variation-settings: 'SOFT' 100;
   font-size: 1.9rem;
   line-height: 1;
   font-variant-numeric: tabular-nums;
@@ -364,7 +364,7 @@ a.today__row:active {
 .trackcard__title {
   font-family: var(--font-display);
   font-weight: 600;
-  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-variation-settings: 'SOFT' 100;
   font-size: var(--t-3);
   line-height: 1.1;
 }
@@ -569,7 +569,7 @@ a.today__row:active {
 .node__title {
   font-family: var(--font-display);
   font-weight: 600;
-  font-variation-settings: 'SOFT' 100, 'WONK' 0;
+  font-variation-settings: 'SOFT' 100;
   font-size: var(--t-1);
   line-height: 1.2;
 }

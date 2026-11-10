@@ -116,6 +116,12 @@ export function VideoStep({
   const ref = useRef<HTMLVideoElement>(null);
   const [speed, setSpeed] = useState(1);
   const [loading, setLoading] = useState(false);
+  // The poster is fetched only once the step has been opened, so a lesson that starts
+  // on the warm-up does not download an image nobody is looking at yet.
+  const [opened, setOpened] = useState(false);
+  useEffect(() => {
+    if (active) setOpened(true);
+  }, [active]);
 
   // leaving the step pauses playback
   useEffect(() => {
@@ -136,7 +142,7 @@ export function VideoStep({
               controls
               playsInline
               preload="none"
-              poster={video.poster}
+              poster={opened ? video.poster : undefined}
               aria-label={`Video: ${title}`}
               onWaiting={() => setLoading(true)}
               onLoadStart={() => setLoading(true)}

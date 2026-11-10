@@ -43,8 +43,7 @@ h3,
 h4 {
   font-family: var(--font-display);
   font-weight: 600;
-  font-variation-settings: 'SOFT' 100, 'WONK' 0;
-  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 100;
   line-height: 1.1;
   letter-spacing: -0.015em;
   margin: 0;
@@ -53,7 +52,7 @@ h4 {
 
 h1 {
   font-size: var(--t-4);
-  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-variation-settings: 'SOFT' 100;
 }
 h2 {
   font-size: var(--t-3);
@@ -231,7 +230,7 @@ hr {
   text-decoration: none;
   font-family: var(--font-display);
   font-weight: 650;
-  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-variation-settings: 'SOFT' 100;
   font-size: 1.3rem;
   letter-spacing: -0.02em;
   line-height: 1;

@@ -1,6 +1,6 @@
 // The lesson-complete moment: a dithered burst of rays instead of confetti.
 // Drawn on a tiny canvas (one canvas pixel = one dither cell) and scaled up crisp.
-import { gsap, reduced } from './motion';
+import { reduced, withGsap } from './motion';
 import { hexToRgb, on, smooth } from './dither';
 
 function field(x: number, y: number, w: number, h: number, p: number): number {
@@ -46,6 +46,11 @@ export function playBurst(canvas: HTMLCanvasElement | null): void {
     draw(1);
     return;
   }
-  const o = { p: 0 };
-  gsap.to(o, { p: 1, duration: 0.95, ease: 'power2.out', onUpdate: () => draw(o.p) });
+  withGsap(
+    (gsap) => {
+      const o = { p: 0 };
+      gsap.to(o, { p: 1, duration: 0.95, ease: 'power2.out', onUpdate: () => draw(o.p) });
+    },
+    () => draw(1),
+  );
 }

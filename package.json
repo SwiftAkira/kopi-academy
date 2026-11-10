@@ -6,9 +6,9 @@
   "description": "Unofficial guided exam prep for two first-year VU Amsterdam AI courses.",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/preload-islands.mjs",
     "build:lab": "sh scripts/build-lab.sh",
-    "build:all": "astro build && sh scripts/build-lab.sh",
+    "build:all": "astro build && node scripts/preload-islands.mjs && sh scripts/build-lab.sh",
     "preview": "astro preview",
     "check:videos": "node scripts/check-video-budget.mjs",
     "check:content": "node scripts/check-content.mjs",
