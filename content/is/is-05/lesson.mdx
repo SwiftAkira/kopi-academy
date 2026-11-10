@@ -1,0 +1,76 @@
+---
+id: is-05
+track: is
+courseWeek: "3"
+title: "Logic 2: CNF"
+minutes: 30
+objectives:
+  - You can convert a propositional formula to CNF one step at a time.
+  - You can spot which step went wrong in a faulty conversion.
+gradedAvoid:
+  - IS Assignment 4
+takeaways:
+  - "CNF is a conjunction of clauses, and a clause is a disjunction of literals: an AND of ORs."
+  - "Five steps, always in this order: remove ↔, remove →, move ¬ inward, distribute ∨ over ∧, read off the clauses."
+  - "For a knowledge base, convert every sentence by itself and put all clauses in one set. Compare clauses as sets: order does not matter."
+trap: "De Morgan flips the connective and negates BOTH parts. `¬(P ∨ Q)` is `¬P ∧ ¬Q`, which is two unit clauses. It is not the single clause `¬P ∨ ¬Q`."
+---
+
+## What CNF is
+
+DPLL, the procedure of the next lesson, cannot read arrows. It wants every formula in one fixed shape.
+
+- A **literal** is a variable or a negated variable: `P`, `¬Q`.
+- A **clause** is a disjunction of literals: `P ∨ ¬Q ∨ R`. A single literal is also a clause, called a unit clause.
+- A formula is in **CNF** when it is a conjunction of clauses: `(P ∨ ¬Q) ∧ (¬P ∨ R) ∧ S`.
+
+So CNF is an AND of ORs. The course calls it Clause Normal Form. Conjunctive Normal Form is the same thing. An OR of ANDs is disjunctive normal form, which is something else.
+
+## Five steps, always in this order
+
+| Step | Rule |
+|---|---|
+| 1. Remove ↔ | `A ↔ B` becomes `(A → B) ∧ (B → A)` |
+| 2. Remove → | `A → B` becomes `¬A ∨ B` |
+| 3. Move ¬ inward | `¬(A ∧ B)` becomes `¬A ∨ ¬B`, `¬(A ∨ B)` becomes `¬A ∧ ¬B`, and `¬¬A` becomes `A` |
+| 4. Distribute ∨ over ∧ | `A ∨ (B ∧ C)` becomes `(A ∨ B) ∧ (A ∨ C)` |
+| 5. Read off the clauses | drop repeated literals and repeated clauses |
+
+The first two rules of step 3 are De Morgan's laws: the connective flips and **both** parts get a negation.
+
+## Worked example
+
+A library rule: you may borrow exactly when it is not true that you have an unpaid fine or an overdue book. Let P be "you may borrow", Q "you have an unpaid fine" and R "you have an overdue book".
+
+```text
+start    P ↔ ¬(Q ∨ R)
+step 1   (P → ¬(Q ∨ R)) ∧ (¬(Q ∨ R) → P)
+step 2   (¬P ∨ ¬(Q ∨ R)) ∧ (¬¬(Q ∨ R) ∨ P)
+step 3   (¬P ∨ (¬Q ∧ ¬R)) ∧ (Q ∨ R ∨ P)
+step 4   (¬P ∨ ¬Q) ∧ (¬P ∨ ¬R) ∧ (Q ∨ R ∨ P)
+step 5   { ¬P ∨ ¬Q,  ¬P ∨ ¬R,  P ∨ Q ∨ R }
+```
+
+Three clauses. The order of the literals inside a clause does not matter, and neither does the order of the clauses. Compare clause sets as sets.
+
+## Patterns to check your result
+
+| Formula | Clauses |
+|---|---|
+| `(A ∧ B) → C` | one: `¬A ∨ ¬B ∨ C` |
+| `(A ∨ B) → C` | two: `¬A ∨ C` and `¬B ∨ C` |
+| `A → (B ∧ C)` | two: `¬A ∨ B` and `¬A ∨ C` |
+| `¬(A ∨ B)` | two unit clauses: `¬A` and `¬B` |
+| `¬(A → B)` | two unit clauses: `A` and `¬B` |
+
+## Where conversions go wrong
+
+- **Order.** Never push a negation through an arrow. `¬(P → Q)` is not `¬P → ¬Q`. Remove the arrow first: `¬(¬P ∨ Q)`, and then `P ∧ ¬Q`.
+- **De Morgan.** If you forget to flip the connective, or negate only one part, you get a clause with one wrong sign.
+- **Distribution.** In `A ∨ (B ∧ C)` the `A` goes into both parts. `(A ∨ B) ∧ C` is wrong.
+
+## A knowledge base
+
+Convert every sentence by itself and collect all clauses in one set. You will see two spellings of a clause set: `{ ¬P ∨ ¬Q, P ∨ R }`, or a set of sets with a dash for negation, `{{-P,-Q},{P,R}}`.
+
+To test entailment with DPLL you add the **negated** query. Negate first, then convert the negation.

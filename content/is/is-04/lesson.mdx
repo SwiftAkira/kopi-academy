@@ -1,0 +1,89 @@
+---
+id: is-04
+track: is
+courseWeek: "3"
+title: "Logic 1: meaning"
+minutes: 30
+objectives:
+  - You can tell syntax, semantics and calculus apart.
+  - You can decide with a truth table whether a formula is satisfiable, valid or unsatisfiable.
+  - You can check entailment by comparing models.
+gradedAvoid:
+  - IS Assignment 4
+takeaways:
+  - "`P → Q` is false in one row only: P true and Q false. `P ↔ Q` is true whenever both sides have the same value."
+  - "A model is a row that makes the formula true. Some model: satisfiable. Every row a model: valid. No model: unsatisfiable."
+  - "`KB ⊨ α` means α is true in every model of KB. One model of KB where α is false is enough to say no."
+trap: "A false left side makes an implication TRUE. `F → T` and `F → F` are both T. Most wrong truth-table cells come from this."
+---
+
+## Three parts of a logic
+
+The course sums it up as: logic = syntax + semantics + calculus.
+
+| Part | The question it answers | Example |
+|---|---|---|
+| **Syntax** | Is this string a legal formula? | `P → ¬Q` is legal, `P → ∧ Q` is not |
+| **Semantics** | What does the formula mean? That is its truth value under an interpretation. | With P true and Q true, `P → ¬Q` is false |
+| **Calculus** | Which procedure works the truth out? | A truth table now, DPLL later |
+
+## The five connectives
+
+| P | Q | ¬P | P ∧ Q | P ∨ Q | P → Q | P ↔ Q |
+|---|---|---|---|---|---|---|
+| T | T | F | T | T | T | T |
+| T | F | F | F | T | F | F |
+| F | T | T | F | T | T | F |
+| F | F | T | F | F | T | T |
+
+Two columns cause most mistakes:
+
+- `P → Q` is false in **one** row only: true left side, false right side. A false left side makes it true.
+- `P ↔ Q` is true when both sides are **equal**, also when both are false.
+
+Other spellings you may meet: `-` or `~` for ¬, `&` for ∧, `v` for ∨, `->` or ⇒ for →, and ⇔ for ↔. Lecture tables use 1 and 0. The exam wants capital T and F.
+
+## Building a truth table
+
+Let P be "it rains", Q "you carry an umbrella" and R "you get wet". Take the sentence "rain makes you wet, and an umbrella keeps you dry": `(P → R) ∧ (Q → ¬R)`.
+
+1. Write the variables first. With n variables there are 2 to the power n rows, so 8 here.
+2. Start with the all-T row and end with the all-F row. The rightmost variable changes fastest.
+3. Add one column per sub-formula. Every negation gets its own column.
+4. Fill in column by column. The whole formula comes last.
+
+| P | Q | R | ¬R | P → R | Q → ¬R | (P → R) ∧ (Q → ¬R) |
+|---|---|---|---|---|---|---|
+| T | T | T | F | T | F | F |
+| T | T | F | T | F | T | F |
+| T | F | T | F | T | T | T |
+| T | F | F | T | F | T | F |
+| F | T | T | F | T | F | F |
+| F | T | F | T | T | T | T |
+| F | F | T | F | T | T | T |
+| F | F | F | T | T | T | T |
+
+## Interpretations and models
+
+An **interpretation** (the course also says validation function) `v` gives every variable a value. One row is one interpretation. Row 3 is `v(P) = True, v(Q) = False, v(R) = True`.
+
+A **model** of a formula is an interpretation that makes it true. The formula above has 4 models: rows 3, 6, 7 and 8.
+
+| Word | Meaning | Last column |
+|---|---|---|
+| **satisfiable** | at least one model | some T |
+| **valid** (a tautology) | true under every interpretation | only T |
+| **unsatisfiable** | no model at all | only F |
+
+Our formula is satisfiable but not valid. Every valid formula is also satisfiable.
+
+## Entailment
+
+A **knowledge base** (KB) is a set of sentences that are taken as true, written like `{ P → R, Q → ¬R }`. A model of a KB makes **all** its sentences true at once, so the set behaves like one big conjunction. This KB has the same 4 models as the formula above.
+
+`KB ⊨ α` is read "KB entails α". It means: α is true in **every** model of KB. To check it, look only at the rows where KB is true.
+
+- Is `¬(P ∧ Q)` entailed? In rows 3, 6, 7 and 8, P and Q are never both true. Yes.
+- Is `R` entailed? Row 6 is a model of KB, and R is false there. One counter-row is enough: no.
+
+One link to remember for DPLL: `KB ⊨ α` holds exactly when KB together with `¬α` is unsatisfiable.

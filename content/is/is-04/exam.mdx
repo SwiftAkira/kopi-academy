@@ -1,0 +1,43 @@
+---
+style: Fill in (multiple)
+---
+
+**Fill in (multiple).** Complete the truth table for the formula `(P ↔ Q) → ¬R`.
+
+Answer format: in each of the gaps (a) to (f), type exactly one capital letter, `T` for True or `F` for False. No lower-case letters, no words, no spaces. In gap (g), type one digit.
+
+| P | Q | R | P ↔ Q | ¬R | (P ↔ Q) → ¬R |
+|---|---|---|---|---|---|
+| T | T | T | T | F | (a) |
+| T | T | F | T | T | T |
+| T | F | T | (b) | F | T |
+| T | F | F | F | T | (c) |
+| F | T | T | F | F | (d) |
+| F | T | F | F | T | T |
+| F | F | T | (e) | F | (f) |
+| F | F | F | T | T | T |
+
+The number of models of this formula is (g).
+
+<Answer>
+
+**(a) F, (b) F, (c) T, (d) T, (e) T, (f) F, (g) 6**
+
+Worked steps:
+
+- **(a)** Row T T T: the left side `P ↔ Q` is T and the right side `¬R` is F. True left, false right is the one case in which an implication is false: **F**.
+- **(b)** Row T F T: P and Q have different values, so `P ↔ Q` is **F**.
+- **(c)** Row T F F: the left side is F. An implication with a false left side is true: **T**.
+- **(d)** Row F T T: the left side is F again, so the implication is **T**, even though the right side is F as well.
+- **(e)** Row F F T: P and Q are both false, so they are equal and `P ↔ Q` is **T**.
+- **(f)** Row F F T: the left side is T, see (e), and `¬R` is F. So **F**.
+- **(g)** The complete last column, from top to bottom, is F T T T T T F T. Six rows give T, and every such row is a model: **6**.
+
+What a marker looks for:
+
+- **The exact format.** A digital exam compares what you typed with the key. `T` is right. `t`, `True` or `T ` with a space may be counted as wrong. Read the format line before you type.
+- **Gaps (c) and (d).** They test the rule that a false left side makes an implication true. Typing F there is the most common mistake.
+- **Gap (e).** It tests that a biconditional is true when both sides are false.
+- **Work per column.** Finish `P ↔ Q` and `¬R` first, then use only those two columns for the last one. Gap (f) depends on gap (e).
+
+</Answer>

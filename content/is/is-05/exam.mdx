@@ -1,0 +1,64 @@
+---
+style: Multiple response
+---
+
+**Multiple response.** Consider the following three formulas. Together they are one knowledge base.
+
+```text
+(P ∨ Q) → R
+R → ¬(P ∧ S)
+¬Q → (R ∧ S)
+```
+
+The CNF of these formulas contains some of the following clauses. Which ones? More than one answer is correct.
+
+- **A.** `¬P ∨ R`
+- **B.** `¬P ∨ ¬Q ∨ R`
+- **C.** `¬Q ∨ R`
+- **D.** `¬P ∨ ¬R`
+- **E.** `¬P ∨ ¬R ∨ ¬S`
+- **F.** `Q ∨ R ∨ S`
+- **G.** `Q ∨ S`
+- **H.** `¬Q ∨ S`
+
+Answer format: type the letters of all clauses you would tick, in alphabetical order and without spaces, for example `BDF`. A wrong tick can cost points, so tick only clauses that really appear in the CNF.
+
+<Answer>
+
+**ACEG**
+
+Convert each formula by itself, in the fixed order of steps.
+
+```text
+(P ∨ Q) → R
+  remove →       ¬(P ∨ Q) ∨ R
+  De Morgan      (¬P ∧ ¬Q) ∨ R
+  distribute     (¬P ∨ R) ∧ (¬Q ∨ R)
+
+R → ¬(P ∧ S)
+  remove →       ¬R ∨ ¬(P ∧ S)
+  De Morgan      ¬R ∨ ¬P ∨ ¬S
+
+¬Q → (R ∧ S)
+  remove →       ¬¬Q ∨ (R ∧ S)
+  double ¬       Q ∨ (R ∧ S)
+  distribute     (Q ∨ R) ∧ (Q ∨ S)
+```
+
+The clause set is `{ ¬P ∨ R, ¬Q ∨ R, ¬P ∨ ¬R ∨ ¬S, Q ∨ R, Q ∨ S }`.
+
+- **A** and **C** come from the first formula.
+- **E** is the clause of the second formula. The derivation gives `¬R ∨ ¬P ∨ ¬S`, and the order of the literals does not matter.
+- **G** comes from the third formula. Its other clause, `Q ∨ R`, is not among the options.
+- **B** is wrong. It would be the clause of `(P ∧ Q) → R`. It follows from clause A, but it does not appear in the CNF.
+- **D** is wrong. It is one literal short: `¬S` is missing.
+- **F** is wrong. It is what you get when you forget to distribute Q over `R ∧ S`.
+- **H** is wrong. The sign of Q is off: `¬¬Q` is `Q`.
+
+What a marker looks for:
+
+- **Only exact matches.** The question asks which clauses are in the CNF, not which clauses follow from it. B and F follow from the knowledge base and are still wrong.
+- **Compare as sets.** A clause with the same literals in another order is the same clause. A clause with one literal more or less is a different clause.
+- **The typed format.** Letters only, in alphabetical order, no spaces: `ACEG`.
+
+</Answer>

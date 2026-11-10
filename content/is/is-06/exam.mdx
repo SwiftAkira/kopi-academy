@@ -1,0 +1,88 @@
+---
+style: Fill in (multiple)
+---
+
+**Fill in (multiple).** Given the clause set
+
+```text
+{ Q∨¬R∨S,
+  Q∨¬S,
+  P∨R,
+  ¬Q∨¬R,
+  ¬P∨R∨¬S }
+```
+
+Fill in the gaps to prove with DPLL that the clause set is satisfiable or unsatisfiable. If you have a choice, take the variables in alphabetical order (starting with P) and assign False before True. Do not use any heuristics.
+
+Answer format:
+
+- A **clause set**: type the clauses in the order given above, separated by commas, with no spaces. Type `-` for ¬ and `v` for ∨. Leave out clauses that are satisfied. Example: `-PvQ,R`.
+- A **value**: type `True` or `False`.
+- A **clause** or a **variable**: type it in the same style, for example `-Q` or `Q`.
+- The **verdict**: type `satisfiable` or `unsatisfiable`.
+- If there is no model, type `XXX` in each of the four model gaps.
+
+Assigning the value False to variable P results in the clause set (a).
+
+Given that R is a unit clause, assign the value (b) to variable R, which results in the clause set (c).
+
+Given that (d) is a unit clause, assign the value (e) to variable Q, which results in the clause set (f).
+
+This is a contradiction, so we need to backtrack on (g) and assign it the value (h), which results in the clause set (i).
+
+According to the rule for choices, assign the value (j) to variable (k), which results in the clause set (l).
+
+Given that ¬S is a unit clause, assign the value (m) to variable S, which results in the single clause (n).
+
+This means that the clause set is (o).
+
+Model: P= (p), Q= (q), R= (r), S= (s).
+
+<Answer>
+
+| Gap | Answer | Gap | Answer |
+|---|---|---|---|
+| (a) | `Qv-RvS,Qv-S,R,-Qv-R` | (k) | `Q` |
+| (b) | `True` | (l) | `-RvS,-S,Rv-S` |
+| (c) | `QvS,Qv-S,-Q` | (m) | `False` |
+| (d) | `-Q` | (n) | `-R` |
+| (e) | `False` | (o) | `satisfiable` |
+| (f) | `S,-S` | (p) | `True` |
+| (g) | `P` | (q) | `False` |
+| (h) | `True` | (r) | `False` |
+| (i) | `Qv-RvS,Qv-S,-Qv-R,Rv-S` | (s) | `False` |
+| (j) | `False` | | |
+
+The worked trace:
+
+```text
+clause set              { Q∨¬R∨S, Q∨¬S, P∨R, ¬Q∨¬R, ¬P∨R∨¬S }
+choice: P = False       { Q∨¬R∨S, Q∨¬S, R, ¬Q∨¬R }
+unit R: R = True        { Q∨S, Q∨¬S, ¬Q }
+unit ¬Q: Q = False      { S, ¬S }                       contradiction
+backtrack: P = True     { Q∨¬R∨S, Q∨¬S, ¬Q∨¬R, R∨¬S }
+choice: Q = False       { ¬R∨S, ¬S, R∨¬S }
+unit ¬S: S = False      { ¬R }
+unit ¬R: R = False      { }                             no clauses left
+```
+
+Step by step:
+
+- **(a)** P = False makes `¬P` true. The clause `¬P∨R∨¬S` contains `¬P`, so it is removed. The clause `P∨R` contains P, so it is shortened to `R`. The other three clauses do not change.
+- **(b), (c)** The unit clause `R` forces R = True. `R` is removed. `Q∨¬R∨S` loses `¬R` and becomes `Q∨S`. `¬Q∨¬R` becomes `¬Q`.
+- **(d), (e), (f)** The unit clause `¬Q` forces Q = False. Both `Q∨S` and `Q∨¬S` lose their Q, which leaves `S` and `¬S`.
+- **(g), (h), (i)** `S` and `¬S` cannot both be true. The last choice was P, so go back to the **original** clause set and assign P = True. Now `P∨R` is removed and `¬P∨R∨¬S` is shortened to `R∨¬S`.
+- **(j), (k), (l)** No unit clause and no pure literal, so this is a real choice: the next variable in the alphabet is Q, and False comes first.
+- **(m), (n)** The unit clause `¬S` forces S = False. `¬R∨S` becomes `¬R`. The clauses `¬S` and `R∨¬S` are removed.
+- **(o)** The single clause `¬R` forces R = False, and then no clauses are left: satisfiable.
+- **(p) to (s)** Read the model from the successful branch only: P = True, Q = False, R = False, S = False.
+
+What a marker looks for:
+
+- **The exact format.** The gaps are compared with the key character by character: the original clause order, no spaces, satisfied clauses left out.
+- **Remove versus shorten.** In (a), removing `P∨R` instead of `¬P∨R∨¬S` is the mirror mistake that makes every later gap wrong.
+- **Backtracking from the right place.** Gap (i) starts from the original five clauses, not from the contradictory set `S,-S`.
+- **False before True** in (j), and a unit clause is never a choice: `¬S` gives False in (m).
+- **The model** takes R = False from the successful branch. R = True belongs to the branch that failed.
+
+</Answer>

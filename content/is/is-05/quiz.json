@@ -1,0 +1,60 @@
+{
+  "lesson": "is-05",
+  "questions": [
+    {
+      "id": "is-05-q1",
+      "type": "mc",
+      "prompt": "Which of these formulas is in CNF (clause normal form, also called conjunctive normal form)?",
+      "options": ["(P ∨ ¬Q) ∧ R", "(P ∧ ¬Q) ∨ R", "¬(P ∨ Q) ∧ R", "(P → Q) ∧ R"],
+      "codeOptions": true,
+      "answer": 0,
+      "explain": "CNF is a conjunction of clauses, and a clause is a disjunction of literals. `(P ∨ ¬Q) ∧ R` has the two clauses `P ∨ ¬Q` and `R`. The tempting wrong answer `(P ∧ ¬Q) ∨ R` is the other way round, an OR of ANDs, which is disjunctive normal form. The other two still contain a negation in front of a bracket or an arrow."
+    },
+    {
+      "id": "is-05-q2",
+      "type": "fill",
+      "prompt": "Convert the formula to CNF. The result is one clause. Type it with the literals in alphabetical order, with `-` for ¬ and `v` for ∨, without spaces.",
+      "code": "formula:  P → ¬(Q ∧ R)\nclause:   ____",
+      "lang": "text",
+      "accept": [
+        "-Pv-Qv-R",
+        "-P v -Q v -R",
+        "¬P∨¬Q∨¬R",
+        "¬P ∨ ¬Q ∨ ¬R",
+        "¬Pv¬Qv¬R",
+        "¬P v ¬Q v ¬R",
+        "-P∨-Q∨-R",
+        "-P ∨ -Q ∨ -R",
+        "~Pv~Qv~R",
+        "~P v ~Q v ~R",
+        "~P∨~Q∨~R",
+        "~P ∨ ~Q ∨ ~R"
+      ],
+      "placeholder": "format: -AvB",
+      "explain": "Remove the arrow first: `¬P ∨ ¬(Q ∧ R)`. Then De Morgan turns `¬(Q ∧ R)` into `¬Q ∨ ¬R`, so everything is one clause: `¬P ∨ ¬Q ∨ ¬R`. The trap is to keep the ∧ and write two clauses, or to forget one of the two negations. De Morgan flips the connective and negates both parts."
+    },
+    {
+      "id": "is-05-q3",
+      "type": "mc",
+      "prompt": "One line of this CNF conversion is wrong. Which one, and why?",
+      "code": "start    P → (Q ∧ (R ∨ S))\nline 1   ¬P ∨ (Q ∧ (R ∨ S))\nline 2   (¬P ∨ Q) ∧ (R ∨ S)\nline 3   clauses: ¬P ∨ Q  and  R ∨ S",
+      "lang": "text",
+      "options": [
+        "Line 2: `¬P` must go into both parts, so the second part is `¬P ∨ R ∨ S`",
+        "Line 1: `P → X` must become `P ∨ ¬X`",
+        "Line 2: `Q ∧ (R ∨ S)` must first become `(Q ∧ R) ∨ (Q ∧ S)`",
+        "Line 3: `R ∨ S` must be split into two unit clauses"
+      ],
+      "answer": 0,
+      "explain": "Distribution puts the outside part into **both** inner parts: `A ∨ (B ∧ C)` becomes `(A ∨ B) ∧ (A ∨ C)`. So line 2 must be `(¬P ∨ Q) ∧ (¬P ∨ R ∨ S)`. Line 1 is fine, because `P → X` becomes `¬P ∨ X`. The traps: distributing ∧ over ∨ leads away from CNF, and a disjunction is one clause that is never split."
+    },
+    {
+      "id": "is-05-q4",
+      "type": "mc",
+      "prompt": "The knowledge base `{ P ↔ Q, ¬(Q ∨ R) }` is converted to CNF. How many clauses does the clause set have?",
+      "options": ["4", "3", "2", "5"],
+      "answer": 0,
+      "explain": "`P ↔ Q` gives two clauses, one for each direction: `¬P ∨ Q` and `¬Q ∨ P`. `¬(Q ∨ R)` becomes `¬Q ∧ ¬R`, which is two unit clauses. Together that makes 4. The trap is to read `¬(Q ∨ R)` as the single clause `¬Q ∨ ¬R` and count 3."
+    }
+  ]
+}

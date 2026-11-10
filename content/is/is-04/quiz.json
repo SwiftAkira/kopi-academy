@@ -1,0 +1,73 @@
+{
+  "lesson": "is-04",
+  "questions": [
+    {
+      "id": "is-04-q1",
+      "type": "mc",
+      "prompt": "A logic has three parts. Which part says what a formula **means**, by giving it a truth value under an interpretation?",
+      "options": ["Semantics", "Syntax", "Calculus"],
+      "answer": 0,
+      "explain": "Semantics is about meaning: truth values under interpretations. Syntax only says which strings of symbols are legal formulas. Calculus is the procedure that works the truth out, such as a truth table or DPLL. The trap is to pick syntax because it sounds like the language part."
+    },
+    {
+      "id": "is-04-q2",
+      "type": "fill",
+      "prompt": "Fill in the missing cell of this truth-table row. Type one capital letter: T or F.",
+      "code": "P Q R | P ∨ Q | Q ∧ R | (P ∨ Q) → (Q ∧ R)\nF F T |   F   |   F   |        ____",
+      "lang": "text",
+      "accept": ["T", "True"],
+      "placeholder": "T or F",
+      "explain": "The left side `P ∨ Q` is F, and an implication with a false left side is always T. The trap is to type F because both sides are F. An implication is false only when the left side is T and the right side is F. In the exam, type the single capital letter."
+    },
+    {
+      "id": "is-04-q3",
+      "type": "mc",
+      "prompt": "Make the 4-row truth table of `(P → Q) ∨ (Q → P)`. What kind of formula is it?",
+      "options": ["Valid (a tautology)", "Satisfiable, but not valid", "Unsatisfiable"],
+      "answer": 0,
+      "explain": "Every row gives T, so the formula is valid. When P and Q have the same value, both implications are T. When they differ, one implication has a false left side, so that one is T. The trap is the row with P true and Q false: `P → Q` is F there, but `Q → P` is `F → T`, which is T."
+    },
+    {
+      "id": "is-04-q4",
+      "type": "mc",
+      "prompt": "A knowledge base has exactly the three models shown, one per row. Which sentence is entailed by the knowledge base?",
+      "code": "P Q R\nT T T\nT F T\nF T T",
+      "lang": "text",
+      "options": ["R", "P", "Q", "P ∧ Q"],
+      "codeOptions": true,
+      "answer": 0,
+      "explain": "Entailed means true in **every** model of the knowledge base. `R` is T in all three rows. `P` is F in the third model and `Q` is F in the second, and one counter-row is enough to rule a sentence out. `P ∧ Q` fails in both of those rows. The trap is to accept a sentence that is true in most models."
+    }
+  ],
+  "coldWarmup": [
+    {
+      "id": "is-04-c1",
+      "type": "mc",
+      "prompt": "A universe U has 20 elements. The set A holds 8 of them. How many elements are in the complement of A?",
+      "options": ["12", "8", "28", "20"],
+      "answer": 0,
+      "explain": "The complement holds everything in U that is not in A, so 20 minus 8. The trap is to add the two numbers, or to give the size of A again."
+    },
+    {
+      "id": "is-04-c2",
+      "type": "mc",
+      "prompt": "In a tree, what do you call a node that has no children?",
+      "options": ["A leaf", "The root", "A parent", "An internal node"],
+      "answer": 0,
+      "explain": "A leaf is a node without children. The root is the one node without a parent, at the other end of the tree. Mixing up those two is the trap."
+    },
+    {
+      "id": "is-04-c3",
+      "type": "mc",
+      "prompt": "A search problem is written as a state space. What does the successor function give you?",
+      "options": [
+        "The states you can reach from a state in one step",
+        "Whether a state is a goal state",
+        "The cost of a whole path",
+        "The state in which the search starts"
+      ],
+      "answer": 0,
+      "explain": "The successor function lists the next states, one step away. Deciding whether a state is a goal is the job of the goal test, which is the tempting wrong answer. The starting point is the initial state."
+    }
+  ]
+}

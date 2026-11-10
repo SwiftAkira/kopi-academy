@@ -1,0 +1,90 @@
+---
+id: is-06
+track: is
+courseWeek: "3"
+title: "Logic 3: DPLL"
+minutes: 30
+objectives:
+  - You can run DPLL by hand with unit propagation, pure literals and splitting.
+  - You can fill in the DPLL pseudocode from memory.
+gradedAvoid:
+  - IS Assignment 4
+takeaways:
+  - "Making a literal true: remove the clauses that contain it, shorten the clauses that contain its opposite."
+  - "By hand: unit clause first, then pure literal, then split on the first variable in the alphabet, False before True."
+  - "No clauses left means satisfiable. Two opposite unit clauses, or an empty clause, mean a contradiction: backtrack. If nothing is left to try, the set is unsatisfiable."
+trap: "An empty SET of clauses and an empty CLAUSE are opposites. No clauses left: return True. A clause with no literals left: return False."
+---
+
+## What DPLL does
+
+DPLL takes a set of clauses, so a formula in CNF, and decides whether it is **satisfiable**. If it is, the values it assigned on the way are a model.
+
+## Making a literal true
+
+Every step makes one literal true. That changes the clause set in two ways:
+
+- **Remove** every clause that contains the literal. That clause is satisfied.
+- **Shorten** every clause that contains the opposite literal. That literal is false now, so it is deleted from the clause.
+
+Example: P = False makes `¬P` true. The clause `¬P ∨ R` is removed. The clause `P ∨ R` becomes `R`.
+
+## Which literal? Three rules, in this order
+
+1. **Unit clause.** A clause with one literal leaves no choice: that literal must be true. The unit clause `¬R` forces R = False.
+2. **Pure literal.** A variable that occurs with one sign only. If `Q` occurs and `¬Q` does not, make Q true. That only removes clauses.
+3. **Split.** Otherwise you choose. By hand: take the first variable in the alphabet and try **False first**. If that fails, backtrack and try True.
+
+There are two ways to stop:
+
+- **No clauses left.** Everything is satisfied: satisfiable.
+- **A contradiction.** By hand you see two opposite unit clauses, such as `Q` and `¬Q`. One step later one of them is an **empty clause**: a clause that lost all its literals. This branch fails.
+
+## A trace by hand
+
+```text
+clause set             { ¬Q∨¬R, ¬P∨Q, P∨R, Q∨¬R, Q∨R }
+choice: P = False      { ¬Q∨¬R, R, Q∨¬R, Q∨R }
+unit R: R = True       { ¬Q, Q }                  contradiction
+backtrack: P = True    { ¬Q∨¬R, Q, Q∨¬R, Q∨R }
+unit Q: Q = True       { ¬R }
+unit ¬R: R = False     { }                        no clauses left
+```
+
+The set is satisfiable. The model is P = True, Q = True, R = False.
+
+After a contradiction you go back to the clause set as it was **before** the choice and apply the other value there. Keep the clauses in their original order. If True had failed for P as well, the verdict would be unsatisfiable.
+
+## The pseudocode
+
+The exam prints this procedure with gaps. Learn it by heart.
+
+```text
+dpll(F, literal){
+   remove clauses containing literal
+   shorten clauses containing ¬literal
+
+   if (F contains no clauses)
+       return True
+   if (F contains empty clause)
+       return False
+   if (F contains a unit or pure L)
+       return dpll(F, L)
+
+   choose P in F;
+      if (dpll(F, ¬P))
+          return True;
+      else
+          return dpll(F, P); }
+```
+
+Three things to hold on to:
+
+- The first two lines are mirror images: **remove** goes with `literal`, **shorten** goes with `¬literal`.
+- No clauses gives True. An empty clause gives False.
+- The split calls `dpll(F, ¬P)` first. That is "False before True".
+
+## Two more uses
+
+- **Entailment.** To test whether KB entails a sentence, add the clauses of the **negated** sentence to the clauses of KB and run DPLL. No model found: entailed. A model found: not entailed.
+- **MOMs.** A heuristic for the split: choose the variable that occurs most often in the shortest clauses. Use it only when the question asks for it.

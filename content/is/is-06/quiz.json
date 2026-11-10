@@ -1,0 +1,56 @@
+{
+  "lesson": "is-06",
+  "questions": [
+    {
+      "id": "is-06-q1",
+      "type": "fill",
+      "prompt": "This is the start of the DPLL pseudocode. Fill in the value that is returned. Type it exactly as the pseudocode writes it.",
+      "code": "dpll(F, literal){\n   remove clauses containing literal\n   shorten clauses containing ¬literal\n\n   if (F contains no clauses)\n       return ____",
+      "lang": "text",
+      "accept": ["True"],
+      "placeholder": "one word",
+      "explain": "When no clauses are left, every clause has been satisfied, so the formula is satisfiable and DPLL returns `True`. The trap is to mix this up with the next test: when F contains the **empty clause**, a clause that lost all its literals, DPLL returns `False`."
+    },
+    {
+      "id": "is-06-q2",
+      "type": "mc",
+      "prompt": "DPLL by hand uses this order: unit clause, then pure literal, then split (first variable in the alphabet, False before True). What is the first step on this clause set?",
+      "code": "{ P∨Q, ¬P∨Q, ¬P∨R, Q∨¬R }",
+      "lang": "text",
+      "options": [
+        "Pure literal: assign True to Q",
+        "Split: assign False to P",
+        "Unit clause: assign True to Q",
+        "Split: assign True to P"
+      ],
+      "answer": 0,
+      "explain": "There is no unit clause, because every clause has two literals. `Q` occurs three times and `¬Q` never, so Q is a pure literal and is made true before any split. The trap is to split on P straight away. P and R occur with both signs, so they are not pure."
+    },
+    {
+      "id": "is-06-q3",
+      "type": "mc",
+      "prompt": "Assign the value False to P in this clause set. Which clause set is the result?",
+      "code": "{ P∨Q, ¬P∨R, P∨¬Q∨S, ¬R∨S }",
+      "lang": "text",
+      "options": [
+        "{ Q, ¬Q∨S, ¬R∨S }",
+        "{ R, ¬R∨S }",
+        "{ Q, R, ¬Q∨S, ¬R∨S }",
+        "{ ¬P∨R, ¬R∨S }"
+      ],
+      "codeOptions": true,
+      "answer": 0,
+      "explain": "P = False makes the literal `¬P` true. The clause `¬P∨R` contains it and is removed. The clauses `P∨Q` and `P∨¬Q∨S` contain the opposite literal P, so they are shortened to `Q` and `¬Q∨S`. The trap is the mirror image `{ R, ¬R∨S }`, which is what P = True gives."
+    },
+    {
+      "id": "is-06-q4",
+      "type": "fill",
+      "prompt": "This DPLL trace ends with no clauses left. Type the model in the format `P=True,Q=True,R=True`, with your own values and without spaces.",
+      "code": "clause set             { ¬P∨¬R, Q∨¬R, ¬Q∨¬R, ¬P∨¬Q∨R, P∨R }\nchoice: P = False      { Q∨¬R, ¬Q∨¬R, R }\nunit R: R = True       { Q, ¬Q }        contradiction\nbacktrack: P = True    { ¬R, Q∨¬R, ¬Q∨¬R, ¬Q∨R }\nunit ¬R: R = False     { ¬Q }\nunit ¬Q: Q = False     { }              no clauses left\nmodel                  ____",
+      "lang": "text",
+      "accept": ["P=True,Q=False,R=False", "P=T,Q=F,R=F"],
+      "placeholder": "P=...,Q=...,R=...",
+      "explain": "The model is read from the successful branch only: P = True after the backtrack, then R = False and Q = False from the unit clauses `¬R` and `¬Q`. The trap is to take R = True from the first branch. That branch ended in a contradiction, so its values are thrown away."
+    }
+  ]
+}
