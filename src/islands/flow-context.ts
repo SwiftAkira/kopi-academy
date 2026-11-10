@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect } from 'react';
+import { createContext, useContext, useEffect, useLayoutEffect, type MutableRefObject } from 'react';
 
 /** The single primary action of the lesson bar. Enter always triggers it. */
 export interface StepAction {
@@ -11,6 +11,8 @@ export interface FlowApi {
   lessonId: string;
   next: () => void;
   setAction: (stepId: string, action: StepAction | null) => void;
+  /** The newest action of each step, readable at once: a key press right after an answer must never hit a stale one. */
+  actionRef: MutableRefObject<Record<string, StepAction | null>>;
   announce: (message: string) => void;
 }
 
@@ -27,7 +29,11 @@ export function useFlow(): FlowApi {
  * Pass null to fall back to the default "Continue".
  */
 export function useStepAction(stepId: string, active: boolean, action: StepAction | null): void {
-  const { setAction } = useFlow();
+  const { setAction, actionRef } = useFlow();
+  // Runs in the same commit as the change that produced the action, before the next key event.
+  useLayoutEffect(() => {
+    if (active) actionRef.current[stepId] = action;
+  });
   const label = action?.label;
   const disabled = action?.disabled;
   const run = action?.run;

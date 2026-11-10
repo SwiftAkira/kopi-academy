@@ -150,13 +150,14 @@ export default function LessonFlow(props: LessonFlowProps) {
     lastXp.current = state.xp;
   }, [state.xp, hydrated]);
 
+  const actionRef = useRef<Record<string, StepAction | null>>({});
   const setAction = useCallback((id: string, action: StepAction | null) => {
     setActions((a) => ({ ...a, [id]: action }));
   }, []);
   const announce = useCallback((m: string) => setMessage(m), []);
 
   const api = useMemo<FlowApi>(
-    () => ({ lessonId: lesson.id, next: goNext, setAction, announce }),
+    () => ({ lessonId: lesson.id, next: goNext, setAction, actionRef, announce }),
     [lesson.id, goNext, setAction, announce],
   );
 
@@ -164,9 +165,15 @@ export default function LessonFlow(props: LessonFlowProps) {
   const custom = actions[stepId] ?? null;
   const primary: StepAction | null = custom ?? (isLast ? null : { label: active === steps.length - 2 ? 'Finish lesson' : 'Continue', run: goNext });
 
+  // The button and the Enter key both go through here, and both read the newest action.
+  const fallbackRef = useRef<StepAction | null>(null);
+  fallbackRef.current = isLast ? null : { label: 'Continue', run: goNext };
+  const runPrimary = useCallback(() => {
+    const p = actionRef.current[steps[activeRef.current]] ?? fallbackRef.current;
+    if (p && !p.disabled) p.run();
+  }, [steps]);
+
   // keyboard: Enter = primary action, arrows = step back and forth, 1-4 = pick an answer
-  const primaryRef = useRef(primary);
-  primaryRef.current = primary;
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       // a held-down key must not race through the lesson
@@ -175,11 +182,8 @@ export default function LessonFlow(props: LessonFlowProps) {
       const t = e.target;
       if (e.key === 'Enter') {
         if (ownsKey(t, 'Enter')) return;
-        const p = primaryRef.current;
-        if (p && !p.disabled) {
-          e.preventDefault();
-          p.run();
-        }
+        e.preventDefault();
+        runPrimary();
         return;
       }
       if (isTyping(t)) return;
@@ -203,7 +207,7 @@ export default function LessonFlow(props: LessonFlowProps) {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [goNext, goBack, steps]);
+  }, [goNext, goBack, steps, runPrimary]);
   const stepDone = (id: StepId) => lp.stepsDone.includes(id);
   const skipped = steps
     .map((id, i) => ({ id, i }))
@@ -341,7 +345,7 @@ export default function LessonFlow(props: LessonFlowProps) {
               <span className="flow__prev-label">Back</span>
             </button>
             {primary ? (
-              <button type="button" className="btn btn--primary flow__go" onClick={primary.run} disabled={primary.disabled}>
+              <button type="button" className="btn btn--primary flow__go" onClick={runPrimary} disabled={primary.disabled}>
                 {primary.label}
                 <span className="kbd kbd--hint" aria-hidden="true">
                   Enter
